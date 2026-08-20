@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SistaProjektSeptember2026.Models;
-using SistaProjektSeptember2026.Data;
+using FinalProjectforSeptember.Models;
+using FinalProjectforSeptember.Data;
 using Microsoft.AspNetCore.Authorization;
 
 public class TVShowsController : Controller
@@ -38,7 +38,7 @@ public class TVShowsController : Controller
 	}
 
 	// GET: TVSHOWS/Create
-	[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator(s)")]
 	public IActionResult Create()
 	{
 		return View();
@@ -49,7 +49,7 @@ public class TVShowsController : Controller
 	// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator(s)")]
 	public async Task<IActionResult> Create([Bind("Seasons,EpisodesPerSeason,Id,Title,Date,Actors,AgeGroup,Reviews")] TVShow tvshow)
 	{
 		if (ModelState.IsValid)
@@ -62,7 +62,7 @@ public class TVShowsController : Controller
 	}
 
 	// GET: TVSHOWS/Edit/5
-	[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator(s)")]
 	public async Task<IActionResult> Edit(int? id)
 	{
 		if (id == null)
@@ -83,7 +83,7 @@ public class TVShowsController : Controller
 	// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator(s)")]
 	public async Task<IActionResult> Edit(int? id, [Bind("Seasons,EpisodesPerSeason,Id,Title,Date,Actors,AgeGroup,Reviews")] TVShow tvshow)
 	{
 		if (id != tvshow.Id)
@@ -115,7 +115,7 @@ public class TVShowsController : Controller
 	}
 
 	// GET: TVSHOWS/Delete/5
-	[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator(s)")]
 	public async Task<IActionResult> Delete(int? id)
 	{
 		if (id == null)
@@ -136,7 +136,7 @@ public class TVShowsController : Controller
 	// POST: TVSHOWS/Delete/5
 	[HttpPost, ActionName("Delete")]
 	[ValidateAntiForgeryToken]
-	[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator(s)")]
 	public async Task<IActionResult> DeleteConfirmed(int? id)
 	{
 		var tvshow = await _context.TVShow.FindAsync(id);

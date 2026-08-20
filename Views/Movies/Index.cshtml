@@ -1,24 +1,25 @@
-@model IEnumerable<SistaProjektSeptember2026.Models.Movie>
+@model IEnumerable<FinalProjectforSeptember.Models.Movie>
 
 @{
 	ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
-@if (User.IsInRole("Administrator(s)"))
+@if (User.Identity.IsAuthenticated)
 {
 	<p>
-		<a asp-action="Create">Add Movie</a>
+		<a asp-action="Create">Lägg till film</a>
 	</p>
 }
+
 <table class="table">
 	<thead>
 		<tr>
 			<th>
-				@Html.DisplayNameFor(model => model.Runtime)
+				@Html.DisplayNameFor(model => model.Title)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Title)
+				@Html.DisplayNameFor(model => model.Runtime)
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.Date)
@@ -39,10 +40,10 @@
 @foreach (var item in Model) {
 		<tr>
 			<td>
-				@Html.DisplayFor(model => item.Runtime)
+				@Html.DisplayFor(model => item.Title)
 			</td>
 			<td>
-				@Html.DisplayFor(model => item.Title)
+				@Html.DisplayFor(model => item.Runtime)
 			</td>
 			<td>
 				@Html.DisplayFor(model => item.Date)
@@ -56,15 +57,12 @@
 			<td>
 				@Html.DisplayFor(model => item.Reviews)
 			</td>
-				@if (User.IsInRole("Administrator(s)"))
-				{
-					<td>
-						<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-						<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-						<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-					</td>
-				}
-			</tr>
+			<td>
+				<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+				<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+				<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+			</td>
+		</tr>
 }
 	</tbody>
 </table>

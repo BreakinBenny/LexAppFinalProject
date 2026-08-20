@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SistaProjektSeptember2026.Models;
-using SistaProjektSeptember2026.Data;
+using FinalProjectforSeptember.Models;
+using FinalProjectforSeptember.Data;
 using Microsoft.AspNetCore.Authorization;
 
 public class MoviesController : Controller
@@ -14,7 +14,7 @@ public class MoviesController : Controller
 	}
 
 	// GET: MOVIES
-	public async Task<IActionResult> Index()    
+	public async Task<IActionResult> Index()
 	{
 		return View(await _context.Movie.ToListAsync());
 	}
@@ -38,7 +38,7 @@ public class MoviesController : Controller
 	}
 
 	// GET: MOVIES/Create
-	[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator(s)")]
 	public IActionResult Create()
 	{
 		return View();
@@ -49,7 +49,7 @@ public class MoviesController : Controller
 	// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator(s)")]
 	public async Task<IActionResult> Create([Bind("Runtime,Id,Title,Date,Actors,AgeGroup,Reviews")] Movie movie)
 	{
 		if (ModelState.IsValid)
@@ -62,7 +62,7 @@ public class MoviesController : Controller
 	}
 
 	// GET: MOVIES/Edit/5
-	[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator(s)")]
 	public async Task<IActionResult> Edit(int? id)
 	{
 		if (id == null)
@@ -83,7 +83,7 @@ public class MoviesController : Controller
 	// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator(s)")]
 	public async Task<IActionResult> Edit(int? id, [Bind("Runtime,Id,Title,Date,Actors,AgeGroup,Reviews")] Movie movie)
 	{
 		if (id != movie.Id)
@@ -115,7 +115,7 @@ public class MoviesController : Controller
 	}
 
 	// GET: MOVIES/Delete/5
-	[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator(s)")]
 	public async Task<IActionResult> Delete(int? id)
 	{
 		if (id == null)
@@ -136,7 +136,7 @@ public class MoviesController : Controller
 	// POST: MOVIES/Delete/5
 	[HttpPost, ActionName("Delete")]
 	[ValidateAntiForgeryToken]
-	[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator(s)")]
 	public async Task<IActionResult> DeleteConfirmed(int? id)
 	{
 		var movie = await _context.Movie.FindAsync(id);

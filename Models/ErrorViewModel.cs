@@ -1,9 +1,9 @@
-namespace SistaProjektSeptember2026.Models
+namespace FinalProjectforSeptember.Models
 {
-    public class ErrorViewModel
-    {
-        public string? RequestId { get; set; }
+	public class ErrorViewModel
+	{
+		public string? RequestId { get; set; }
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-    }
+		public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+	}
 }

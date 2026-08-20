@@ -1,0 +1,22 @@
+==2026-08-19==
+"Administrator(s)" role not working even if the login I used was assigned the role's ID
+
+==2026-08-20==
+* Application failing to load data from the database because of a JsonReaderException
+* "Edit" View for both Media subclasses showing System.String[] instead of the different actors' names and the link to reviews/comments (Asked Copilot what was necessary for this and past points)
+* Toggling the administrator interface to show either the usual table, or the visitors'
+
+
+==2026-08-21==
+* 
+* 
+* 
+* 
+
+
+==2026-08-24==
+* 
+* 
+* 
+* 
+
