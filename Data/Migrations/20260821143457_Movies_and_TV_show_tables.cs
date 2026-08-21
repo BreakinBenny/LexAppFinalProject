@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace FinalProjectforSeptember.Data.Migrations
+namespace SistaProjekt_September2026.Data.Migrations
 {
 	/// <inheritdoc />
-	public partial class MovieandTVshowtables : Migration
+	public partial class Movies_and_TV_show_tables : Migration
 	{
 		/// <inheritdoc />
 		protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +18,7 @@ namespace FinalProjectforSeptember.Data.Migrations
 					Id = table.Column<int>(type: "int", nullable: false)
 						.Annotation("SqlServer:Identity", "1, 1"),
 					Runtime = table.Column<byte>(type: "tinyint", nullable: true),
-					Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+					Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
 					Date = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					Actors = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					AgeGroup = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -36,7 +37,8 @@ namespace FinalProjectforSeptember.Data.Migrations
 						.Annotation("SqlServer:Identity", "1, 1"),
 					Seasons = table.Column<byte>(type: "tinyint", nullable: true),
 					EpisodesPerSeason = table.Column<byte>(type: "tinyint", nullable: true),
-					Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+					ChristmasShow = table.Column<bool>(type: "bit", nullable: false),
+					Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
 					Date = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					Actors = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					AgeGroup = table.Column<string>(type: "nvarchar(max)", nullable: true),

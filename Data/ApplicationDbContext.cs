@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SistaProjekt_September2026.Models;
 
-namespace FinalProjectforSeptember.Data
+namespace SistaProjekt_September2026.Data
 {
 	public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext(options)
 	{
-		public DbSet<FinalProjectforSeptember.Models.TVShow> TVShow { get; set; } = default!;
-		public DbSet<FinalProjectforSeptember.Models.Movie> Movie { get; set; } = default!;
+		public DbSet<TVShow> TVShow { get; set; } = default!;
+		public DbSet<Movie> Movie { get; set; } = default!;
 	}
 }

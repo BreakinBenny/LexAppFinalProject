@@ -1,4 +1,4 @@
-@model IEnumerable<FinalProjectforSeptember.Models.TVShow>
+@model IEnumerable<SistaProjekt_September2026.Models.TVShow>
 
 @{
 	ViewData["Title"] = "Index";
@@ -9,7 +9,7 @@
 @if (User.Identity.IsAuthenticated)
 {
 	<p>
-		<a asp-action="Create">Lägg till film</a> |
+		<a asp-action="Create">Lägg till TV-serie</a> |
 
 		<input type="checkbox" id="admin" name="admin" value="adminUI" @* onclick="location.reload()" *@ />
 		<label for="admin">Växla Admin-gränssnitt</label>

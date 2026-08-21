@@ -8,7 +8,7 @@
 
 
 ==2026-08-21==
-* 
+* Setting up API for fetching movies and TV shows from for instance, SVT Play. It requires an API key for authorization, requiring I email them and get approved before I can fetch from them.
 * 
 * 
 * 

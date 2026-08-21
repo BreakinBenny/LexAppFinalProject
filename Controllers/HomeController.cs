@@ -1,8 +1,8 @@
-using FinalProjectforSeptember.Models;
+using SistaProjekt_September2026.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace FinalProjectforSeptember.Controllers
+namespace SistaProjekt_September2026.Controllers
 {
 	public class HomeController : Controller
 	{

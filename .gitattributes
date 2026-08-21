@@ -1,5 +1,10 @@
 # All files are checked into the repo with LF
 * text=auto
 
-# These files are checked out using CRLF locally
-*.bat eol=crlf
+# These files are checked out using alternate EOL locally (such as CRLF) locally
+*.cs text diff=csharp
+*.cshtml text diff=html
+*.css text diff=css
+*.js text diff=javascript
+*.json text diff=json
+*.md text diff=markdown

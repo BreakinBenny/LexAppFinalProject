@@ -1,4 +1,4 @@
-namespace FinalProjectforSeptember.Models
+namespace SistaProjekt_September2026.Models
 {
 	public class ErrorViewModel
 	{
