@@ -19,7 +19,8 @@ namespace SistaProjekt_September2026.Data.Migrations
 						.Annotation("SqlServer:Identity", "1, 1"),
 					Runtime = table.Column<byte>(type: "tinyint", nullable: true),
 					Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-					Date = table.Column<string>(type: "nvarchar(max)", nullable: true),
+					Year = table.Column<string>(type: "nvarchar(max)", nullable: true),
+					Genres = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					Actors = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					AgeGroup = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					Reviews = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -37,9 +38,9 @@ namespace SistaProjekt_September2026.Data.Migrations
 						.Annotation("SqlServer:Identity", "1, 1"),
 					Seasons = table.Column<byte>(type: "tinyint", nullable: true),
 					EpisodesPerSeason = table.Column<byte>(type: "tinyint", nullable: true),
-					ChristmasShow = table.Column<bool>(type: "bit", nullable: false),
 					Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-					Date = table.Column<string>(type: "nvarchar(max)", nullable: true),
+					Year = table.Column<string>(type: "nvarchar(max)", nullable: true),
+					Genres = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					Actors = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					AgeGroup = table.Column<string>(type: "nvarchar(max)", nullable: true),
 					Reviews = table.Column<string>(type: "nvarchar(max)", nullable: true)

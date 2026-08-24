@@ -9,8 +9,10 @@ namespace SistaProjekt_September2026.Models
 		[Display(Name = "Titel")]
 		public string Title { get; set; }
 		[Display(Name = "Lanseringsår")]
-		public string? Date { get; set; }
-		[Display(Name = "Medverkande")]
+		public string? Year { get; set; }
+        [Display(Name = "Genre(r)")]
+        public string? Genres { get; set; }
+        [Display(Name = "Medverkande")]
 		public string[]? Actors { get; set; }
 		[Display(Name = "Åldersgrupp(er)")]
 		public string? AgeGroup { get; set; }
@@ -25,10 +27,8 @@ namespace SistaProjekt_September2026.Models
 	public class TVShow : Media
 	{
 		[Display(Name = "Säsonger")]
-		public byte? Seasons { get; set; }
+		public byte Seasons { get; set; } = 1;
 		[Display(Name = "Avsnitt per säsong")]
 		public byte? EpisodesPerSeason { get; set; }
-		[Display(Name = "Julprogram")]
-		public bool ChristmasShow { get; set; } = false;
 	}
 }

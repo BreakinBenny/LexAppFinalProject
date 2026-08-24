@@ -65,8 +65,7 @@ public class TVShowsController : Controller
 	[HttpPost]
 	[ValidateAntiForgeryToken]
 	//[Authorize(Roles = "Administrator(s)")]
-	//public async Task<IActionResult> Create([Bind("Seasons,EpisodesPerSeason,ChristmasShow,Id,Title,Date,Actors,AgeGroup,Reviews")] TVShow tvshow)
-	public async Task<IActionResult> Create([Bind("Seasons,EpisodesPerSeason,Id,Title,Date,Actors,AgeGroup,Reviews")] TVShow tvshow)
+	public async Task<IActionResult> Create([Bind("Seasons,EpisodesPerSeason,Genres,Id,Title,Date,Actors,AgeGroup,Reviews")] TVShow tvshow)
 	{
 		if (ModelState.IsValid)
 		{
@@ -99,7 +98,7 @@ public class TVShowsController : Controller
 	[ValidateAntiForgeryToken]
 	//[Authorize(Roles = "Administrator(s)")]
 	//public async Task<IActionResult> Edit(int? id, [Bind("Seasons,EpisodesPerSeason,ChristmasShow,Id,Title,Date,Actors,AgeGroup,Reviews")] TVShow tvshow)
-	public async Task<IActionResult> Edit(int? id, [Bind("Seasons,EpisodesPerSeason,Id,Title,Date,Actors,AgeGroup,Reviews")] TVShow tvshow)
+	public async Task<IActionResult> Edit(int? id, [Bind("Seasons,EpisodesPerSeason,Genres,Id,Title,Date,Actors,AgeGroup,Reviews")] TVShow tvshow)
 	{
 		if (id != tvshow.Id)
 			return NotFound();

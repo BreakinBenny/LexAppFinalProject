@@ -30,8 +30,11 @@
 				<th>
 					@Html.DisplayNameFor(model => model.EpisodesPerSeason)
 				</th>
+				<td>
+					@Html.DisplayNameFor(model => model.Genres)
+				</td>
 				<th>
-					@Html.DisplayNameFor(model => model.Date)
+					@Html.DisplayNameFor(model => model.Year)
 				</th>
 				<th>
 					@Html.DisplayNameFor(model => model.Actors)
@@ -59,7 +62,10 @@
 						@Html.DisplayFor(model => item.EpisodesPerSeason)
 					</td>
 					<td>
-						@Html.DisplayFor(model => item.Date)
+						@Html.DisplayFor(model => item.Genres)
+					</td>
+					<td>
+						@Html.DisplayFor(model => item.Year)
 					</td>
 					<td>
 						@Html.DisplayFor(model => item.Actors)
@@ -95,8 +101,11 @@ else
 				<th>
 					@Html.DisplayNameFor(model => model.EpisodesPerSeason)
 				</th>
+				<td>
+					@Html.DisplayNameFor(model => model.Genres)
+				</td>
 				<th>
-					@Html.DisplayNameFor(model => model.Date)
+					@Html.DisplayNameFor(model => model.Year)
 				</th>
 				<th>
 					@Html.DisplayNameFor(model => model.Actors)
@@ -123,7 +132,10 @@ else
 						@Html.DisplayFor(model => item.EpisodesPerSeason)
 					</td>
 					<td>
-						@Html.DisplayFor(model => item.Date)
+						@Html.DisplayFor(model => item.Genres)
+					</td>
+					<td>
+						@Html.DisplayFor(model => item.Year)
 					</td>
 					<td>
 						@Html.DisplayFor(model => item.Actors)
