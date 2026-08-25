@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SistaProjekt_September2026.Data;
-using SistaProjekt_September2026.Models;
+using SistaProjektSeptember2026.Data;
+using SistaProjektSeptember2026.Models;
 
 //[Route("/[controller]")]
 //[ApiController]
@@ -77,7 +77,7 @@ public class TVShowsController : Controller
 	}
 
 	// GET: TVSHOWS/Edit/5
-	[HttpPut]
+	[HttpGet]
 	//[Authorize(Roles = "Administrator(s)")]
 	public async Task<IActionResult> Edit(int? id)
 	{
@@ -94,7 +94,7 @@ public class TVShowsController : Controller
 	// POST: TVSHOWS/Edit/5
 	// To protect from overposting attacks, enable the specific properties you want to bind to.
 	// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-	[HttpPut]
+	[HttpGet]
 	[ValidateAntiForgeryToken]
 	//[Authorize(Roles = "Administrator(s)")]
 	//public async Task<IActionResult> Edit(int? id, [Bind("Seasons,EpisodesPerSeason,ChristmasShow,Id,Title,Date,Actors,AgeGroup,Reviews")] TVShow tvshow)
