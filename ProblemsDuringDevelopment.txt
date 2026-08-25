@@ -20,3 +20,6 @@
 * 
 * 
 
+==2026-08-25==
+* Adding respective strings represented by bits (with Flags) is still difficult
+* API will need to wait before more is done with it

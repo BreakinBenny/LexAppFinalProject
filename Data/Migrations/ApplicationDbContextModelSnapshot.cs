@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SistaProjekt_September2026.Data;
+using SistaProjektSeptember2026.Data;
 
 #nullable disable
 
-namespace SistaProjekt_September2026.Data.Migrations
+namespace SistaProjektSeptember2026.Data.Migrations
 {
 	[DbContext(typeof(ApplicationDbContext))]
 	partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -224,7 +224,7 @@ namespace SistaProjekt_September2026.Data.Migrations
 					b.ToTable("AspNetUserTokens", (string)null);
 				});
 
-			modelBuilder.Entity("SistaProjekt_September2026.Models.Movie", b =>
+			modelBuilder.Entity("SistaProjektSeptember2026.Models.Movie", b =>
 				{
 					b.Property<int>("Id")
 						.ValueGeneratedOnAdd()
@@ -259,7 +259,7 @@ namespace SistaProjekt_September2026.Data.Migrations
 					b.ToTable("Movie");
 				});
 
-			modelBuilder.Entity("SistaProjekt_September2026.Models.TVShow", b =>
+			modelBuilder.Entity("SistaProjektSeptember2026.Models.TVShow", b =>
 				{
 					b.Property<int>("Id")
 						.ValueGeneratedOnAdd()

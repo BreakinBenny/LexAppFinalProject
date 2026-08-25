@@ -1,4 +1,4 @@
-using SistaProjekt_September2026.Data;
+using SistaProjektSeptember2026.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 //using Scalar.AspNetCore;

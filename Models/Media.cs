@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 [Flags]
-enum Genre
+enum Genre : ushort
 {
 	NoGenre = 0,
 	Action = 1,

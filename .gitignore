@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/aspNET-SistaProjectSeptember2026.ldf
+/aspNET-SistaProjectSeptember2026.mdf
+/bin
+/obj
+/.vs

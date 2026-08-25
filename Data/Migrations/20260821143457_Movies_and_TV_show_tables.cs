@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SistaProjekt_September2026.Data.Migrations
+namespace SistaProjektSeptember2026.Data.Migrations
 {
 	/// <inheritdoc />
 	public partial class Movies_and_TV_show_tables : Migration

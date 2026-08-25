@@ -4,7 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-SistaProjekt_September2026-bbe927ea-ca69-4f05-a220-33cb2bdbf08b</UserSecretsId>
+    <UserSecretsId>aspnet-SistaProjektSeptember2026-bbe927ea-ca69-4f05-a220-33cb2bdbf08b</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
