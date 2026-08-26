@@ -23,3 +23,10 @@
 ==2026-08-25==
 * Adding respective strings represented by bits (with Flags) is still difficult
 * API will need to wait before more is done with it
+
+==2026-08-26==
+* Flags now function properly, but are reset when going to the Edit view for respective media item
+* 
+* 
+* 
+

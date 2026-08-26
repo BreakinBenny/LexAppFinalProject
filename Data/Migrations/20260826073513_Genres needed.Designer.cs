@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistaProjektSeptember2026.Data;
 
@@ -11,9 +12,11 @@ using SistaProjektSeptember2026.Data;
 namespace SistaProjektSeptember2026.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260826073513_Genres needed")]
+    partial class Genresneeded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,8 +241,8 @@ namespace SistaProjektSeptember2026.Data.Migrations
                     b.Property<string>("AgeGroup")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Genres")
-                        .HasColumnType("int");
+                    b.Property<string>("Genres")
+                        .HasColumnType("nvarchar(max)");
 
                     b.PrimitiveCollection<string>("Reviews")
                         .HasColumnType("nvarchar(max)");
@@ -276,8 +279,8 @@ namespace SistaProjektSeptember2026.Data.Migrations
                     b.Property<byte?>("EpisodesPerSeason")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("Genres")
-                        .HasColumnType("int");
+                    b.Property<string>("Genres")
+                        .HasColumnType("nvarchar(max)");
 
                     b.PrimitiveCollection<string>("Reviews")
                         .HasColumnType("nvarchar(max)");

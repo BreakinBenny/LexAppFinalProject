@@ -2,9 +2,8 @@
 
 @{ ViewData["Title"] = "Create"; }
 
-<h1>Create</h1>
+<h2>Lägg till film</h2>
 
-<h4>Movie</h4>
 <hr />
 <div class="row">
 	<div class="col-md-4">
@@ -31,7 +30,70 @@
 
 			<div class="form-group">
 				<label asp-for="Genres" class="control-label"></label>
-				<input asp-for="Genres" class="form-control" />
+				<input asp-for="Genres" id="Genres" value="0" type="hidden" />
+
+				<div>
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="1" /> Action
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="2" /> Adventure
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="4" /> Animated
+					</label>
+
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="8" /> Anime
+					</label>
+
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="16" /> Christmas
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="32" /> Comedy
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="64" /> Criminal
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="128" /> Drama
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="256" /> Family
+					</label>
+
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="512" /> History
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="1024" /> Horror
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="2048" /> Mystery
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="4096" /> Romance
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="8192" /> SciFi
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="16384" /> Thriller
+					</label>
+				</div>
+
 				<span asp-validation-for="Genres" class="text-danger"></span>
 			</div>
 
@@ -62,3 +124,24 @@
 <div>
 	<a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+<script>
+	( function() {
+		const hidden = document.getElementById('Genres');
+		const boxes = document.querySelectorAll('.genre-checkbox');
+
+		function updateMask() {
+			let mask = 0;
+			boxes.forEach(b => {
+				if (b.checked) mask |= Number(b.getAttribute('data-value') || 0);
+			});
+
+			hidden.value = mask;
+		}
+
+		boxes.forEach(b => b.addEventListener('change', updateMask));
+		updateMask();	// When loading, initialize
+	}) ();
+</script>
+}

@@ -25,16 +25,14 @@
 					@Html.DisplayNameFor(model => model.Title)
 				</th>
 				<th>
-					@Html.DisplayNameFor(model => model.Seasons)
-				</th>
-				<th>
+					@Html.DisplayNameFor(model => model.Seasons) & 
 					@Html.DisplayNameFor(model => model.EpisodesPerSeason)
 				</th>
-				<td>
-					@Html.DisplayNameFor(model => model.Genres)
-				</td>
 				<th>
 					@Html.DisplayNameFor(model => model.Year)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Genres)
 				</th>
 				<th>
 					@Html.DisplayNameFor(model => model.Actors)
@@ -56,16 +54,15 @@
 						@Html.DisplayFor(model => item.Title)
 					</td>
 					<td>
-						@Html.DisplayFor(model => item.Seasons)
-					</td>
-					<td>
+						@Html.DisplayFor(model => item.Seasons), 
 						@Html.DisplayFor(model => item.EpisodesPerSeason)
 					</td>
 					<td>
-						@Html.DisplayFor(model => item.Genres)
+						@Html.DisplayFor(model => item.Year)
 					</td>
 					<td>
-						@Html.DisplayFor(model => item.Year)
+					@if (item.Genres > 0)
+						@Html.DisplayFor(model => item.Genres)
 					</td>
 					<td>
 						@Html.DisplayFor(model => item.Actors)
@@ -77,9 +74,14 @@
 						@Html.DisplayFor(model => item.Reviews)
 					</td>
 					<td>
-						<a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
-						<a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
-						<a asp-action="Delete" asp-route-id="@item.Id">Ta bort</a>
+					@if (User.Identity.IsAuthenticated)
+					{
+						<p style="align-center;">
+							<a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
+							<a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
+						</p>
+					}
+						<a asp-action="Details" asp-route-id="@item.Id">Läs mer</a>
 					</td>
 				</tr>
 			}
@@ -96,14 +98,12 @@ else
 					@Html.DisplayNameFor(model => model.Title)
 				</th>
 				<th>
-					@Html.DisplayNameFor(model => model.Seasons)
-				</th>
-				<th>
+					@Html.DisplayNameFor(model => model.Seasons) & 
 					@Html.DisplayNameFor(model => model.EpisodesPerSeason)
 				</th>
-				<td>
+				<th>
 					@Html.DisplayNameFor(model => model.Genres)
-				</td>
+				</th>
 				<th>
 					@Html.DisplayNameFor(model => model.Year)
 				</th>
@@ -126,12 +126,11 @@ else
 						@Html.DisplayFor(model => item.Title)
 					</td>
 					<td>
-						@Html.DisplayFor(model => item.Seasons)
-					</td>
-					<td>
+						@Html.DisplayFor(model => item.Seasons), 
 						@Html.DisplayFor(model => item.EpisodesPerSeason)
 					</td>
 					<td>
+					@if (item.Genres > 0)
 						@Html.DisplayFor(model => item.Genres)
 					</td>
 					<td>

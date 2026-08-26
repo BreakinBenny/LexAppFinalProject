@@ -53,10 +53,10 @@ public class TVShowsController : Controller
 	}
 
 	// GET: TVSHOWS/Create
-	//[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator")]
 	public IActionResult Create()
 	{
-		return View();
+		return View(new TVShow());
 	}
 
 	// POST: TVSHOWS/Create
@@ -64,8 +64,8 @@ public class TVShowsController : Controller
 	// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	//[Authorize(Roles = "Administrator(s)")]
-	public async Task<IActionResult> Create([Bind("Seasons,EpisodesPerSeason,Genres,Id,Title,Date,Actors,AgeGroup,Reviews")] TVShow tvshow)
+	//[Authorize(Roles = "Administrator")]
+	public async Task<IActionResult> Create([Bind("Seasons,EpisodesPerSeason,Id,Title,Year,Genres,Actors,AgeGroup,Reviews")] TVShow tvshow)
 	{
 		if (ModelState.IsValid)
 		{
@@ -78,7 +78,7 @@ public class TVShowsController : Controller
 
 	// GET: TVSHOWS/Edit/5
 	[HttpGet]
-	//[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator")]
 	public async Task<IActionResult> Edit(int? id)
 	{
 		if (id == null)
@@ -94,11 +94,10 @@ public class TVShowsController : Controller
 	// POST: TVSHOWS/Edit/5
 	// To protect from overposting attacks, enable the specific properties you want to bind to.
 	// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-	[HttpGet]
+	[HttpPost]
 	[ValidateAntiForgeryToken]
-	//[Authorize(Roles = "Administrator(s)")]
-	//public async Task<IActionResult> Edit(int? id, [Bind("Seasons,EpisodesPerSeason,ChristmasShow,Id,Title,Date,Actors,AgeGroup,Reviews")] TVShow tvshow)
-	public async Task<IActionResult> Edit(int? id, [Bind("Seasons,EpisodesPerSeason,Genres,Id,Title,Date,Actors,AgeGroup,Reviews")] TVShow tvshow)
+	//[Authorize(Roles = "Administrator")]
+	public async Task<IActionResult> Edit(int? id, [Bind("Seasons,EpisodesPerSeason,Id,Title,Year,Genres,Actors,AgeGroup,Reviews")] TVShow tvshow)
 	{
 		if (id != tvshow.Id)
 			return NotFound();
@@ -123,7 +122,7 @@ public class TVShowsController : Controller
 	}
 
 	// GET: TVSHOWS/Delete/5
-	//[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator")]
 	public async Task<IActionResult> Delete(int? id)
 	{
 		if (id == null)
@@ -138,9 +137,9 @@ public class TVShowsController : Controller
 	}
 
 	// POST: TVSHOWS/Delete/5
-	[HttpDelete, ActionName("Delete")]
+	[HttpPost, ActionName("Delete")]
 	[ValidateAntiForgeryToken]
-	//[Authorize(Roles = "Administrator(s)")]
+	//[Authorize(Roles = "Administrator")]
 	public async Task<IActionResult> DeleteConfirmed(int? id)
 	{
 		var tvshow = await _context.TVShow.FindAsync(id);

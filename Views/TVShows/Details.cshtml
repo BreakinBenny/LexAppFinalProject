@@ -2,10 +2,10 @@
 
 @{ ViewData["Title"] = "Details"; }
 
-<h1>Details</h1>
+<h1>Mer om <i>@Html.DisplayFor(model => model.Title)</i></h1>
 
 <div>
-	<h4>TVShow</h4>
+	<h4>TV-serie</h4>
 	<hr />
 	<dl class="row">
 		<dt class = "col-sm-2">
@@ -14,50 +14,47 @@
 		<dd class = "col-sm-10">
 			@Html.DisplayFor(model => model.Seasons)
 		</dd>
-	</dl>
+
 		<dt class = "col-sm-2">
 			@Html.DisplayNameFor(model => model.EpisodesPerSeason)
 		</dt>
 		<dd class = "col-sm-10">
 			@Html.DisplayFor(model => model.EpisodesPerSeason)
 		</dd>
-	</dl>
-		<dt class = "col-sm-2">
-			@Html.DisplayNameFor(model => model.Title)
-		</dt>
-		<dd class = "col-sm-10">
-			@Html.DisplayFor(model => model.Title)
-		</dd>
-	</dl>
-	</dl>
+
 		<dt class = "col-sm-2">
 			@Html.DisplayNameFor(model => model.Genres)
 		</dt>
 		<dd class = "col-sm-10">
+		@if (Model.Genres > 0)
 			@Html.DisplayFor(model => model.Genres)
+		else
+		{
+			<p>Inga genrer angivna</p>				
+		}
 		</dd>
-	</dl>
+
 		<dt class = "col-sm-2">
 			@Html.DisplayNameFor(model => model.Year)
 		</dt>
 		<dd class = "col-sm-10">
 			@Html.DisplayFor(model => model.Year)
 		</dd>
-	</dl>
+
 		<dt class = "col-sm-2">
 			@Html.DisplayNameFor(model => model.Actors)
 		</dt>
 		<dd class = "col-sm-10">
 			@Html.DisplayFor(model => model.Actors)
 		</dd>
-	</dl>
+
 		<dt class = "col-sm-2">
 			@Html.DisplayNameFor(model => model.AgeGroup)
 		</dt>
 		<dd class = "col-sm-10">
 			@Html.DisplayFor(model => model.AgeGroup)
 		</dd>
-	</dl>
+
 		<dt class = "col-sm-2">
 			@Html.DisplayNameFor(model => model.Reviews)
 		</dt>
@@ -67,6 +64,9 @@
 	</dl>
 </div>
 <div>
-	<a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-	<a asp-action="Index">Back to List</a>
+	@if (User.Identity.IsAuthenticated)
+	{
+		<a asp-action="Edit" asp-route-id="@Model?.Id">Redigera info</a>
+	}
+	<a asp-action="Index">Tillbaka till listan</a>
 </div>

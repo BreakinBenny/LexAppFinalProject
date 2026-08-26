@@ -2,9 +2,7 @@
 
 @{ ViewData["Title"] = "Edit"; }
 
-<h1>Edit</h1>
-
-<h4>TVShow</h4>
+<h4>Ändrar egenskaper för ID @Html.DisplayFor(Model => Model.Id) (<i>@Html.DisplayFor(Model => Model.Title)</i>)</h4>
 <hr />
 <div class="row">
 	<div class="col-md-4">
@@ -16,18 +14,10 @@
 				<label asp-for="Seasons" class="control-label"></label>
 				<input asp-for="Seasons" class="form-control" />
 				<span asp-validation-for="Seasons" class="text-danger"></span>
-			</div>
 
-			<div class="form-group">
 				<label asp-for="EpisodesPerSeason" class="control-label"></label>
 				<input asp-for="EpisodesPerSeason" class="form-control" />
 				<span asp-validation-for="EpisodesPerSeason" class="text-danger"></span>
-			</div>
-
-			<div class="form-group">
-				<label asp-for="Genres" class="control-label"></label>
-				<input asp-for="Genres" class="btn-check" />
-				<span asp-validation-for="Genres" class="text-danger"></span>
 			</div>
 
 			<div class="form-group">
@@ -35,17 +25,80 @@
 				<input asp-for="Title" class="form-control" />
 				<span asp-validation-for="Title" class="text-danger"></span>
 			</div>
+			
+			<div class="form-group">
+				<label asp-for="Genres" class="control-label"></label>
+				<input asp-for="Genres" id="Genres" @*value="0"*@ type="hidden" />
+
+				<div>
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="1" /> Action
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="2" /> Adventure
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="4" /> Animated
+					</label>
+
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="8" /> Anime
+					</label>
+
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="16" /> Christmas
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="32" /> Comedy
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="64" /> Criminal
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="128" /> Drama
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="256" /> Family
+					</label>
+
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="512" /> History
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="1024" /> Horror
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="2048" /> Mystery
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="4096" /> Romance
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="8192" /> SciFi
+					</label>
+				
+					<label class="form-check-label">
+					<input class="form-check-input genre-checkbox" type="checkbox" data-value="16384" /> Thriller
+					</label>
+				</div>
+
+				<span asp-validation-for="Genres" class="text-danger"></span>
+			</div>
 
 			<div class="form-group">
 				<label asp-for="Year" class="control-label"></label>
 				<input asp-for="Year" class="form-control" />
 				<span asp-validation-for="Year" class="text-danger"></span>
-			</div>
-
-			<div class="form-group">
-				<label asp-for="Genres" class="control-label"></label>
-				<input asp-for="Genres" class="form-control" />
-				<span asp-validation-for="Genres" class="text-danger"></span>
 			</div>
 
 			<div class="form-group">
@@ -74,9 +127,27 @@
 </div>
 
 <div>
-	<a asp-action="Index">Back to List</a>
+	<a asp-action="Index">Tillbaka</a>
 </div>
 
 @section Scripts {
 	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+<script>
+	( function() {
+		const hidden = document.getElementById('Genres');
+		const boxes = document.querySelectorAll('.genre-checkbox');
+
+		function updateMask() {
+			let mask = 0;
+			boxes.forEach(b => {
+				if (b.checked) mask |= Number(b.getAttribute('data-value') || 0);
+			});
+
+			hidden.value = mask;
+		}
+
+		boxes.forEach(b => b.addEventListener('change', updateMask));
+		updateMask();	// When loading, initialize
+	}) ();
+</script>
 }
