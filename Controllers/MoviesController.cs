@@ -114,8 +114,6 @@ public class MoviesController : Controller
 		if (movie == null)
 			return NotFound();
 
-		string Escape(string s) => s.Contains(", ") ? $"{s}" : s;
-
 		return View(movie);
 	}
 

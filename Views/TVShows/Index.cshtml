@@ -77,7 +77,7 @@
 					</td>
 					<td>
 					@if (item.Actors.Length < 2)
-						@Html.DisplayFor(model => item.Actors[0].ToString())
+						@Html.DisplayFor(model => item.Actors[0])
 					else {
 						// Add comma separator for reviews and actors
 					}
@@ -86,13 +86,8 @@
 						@Html.DisplayFor(model => item.AgeGroup)
 					</td>
 					<td>
-					@if (item.Reviews.Length < 2) {
-						if (!String.IsNullOrWhiteSpace(item.Reviews[0]))
-							@Html.DisplayFor(model => item.Reviews);
-					}
-					else {
-						// See Actors above
-					}
+					@if (item.Reviews != null)
+						@Html.DisplayFor(model => item.Reviews);
 					</td>
 					<td>
 					@if (User.Identity.IsAuthenticated)

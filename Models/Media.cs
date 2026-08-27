@@ -33,6 +33,19 @@ namespace SistaProjektSeptember2026.Models
 		SciFi = 8192,	// 1 << 13
 		Thriller = 16384 // 1 << 14
 	}
+
+	[Flags]
+	public enum AgeRating : byte
+	{
+		[Display(Name = "Kan ses av alla åldrar")]
+		AllAges = 0,
+		[Display(Name = "Från 7 år")]
+		Seven = 1 << 1,
+		[Display(Name = "Från 11 år")]
+		Eleven = 1 << 2,
+		[Display(Name = "Från 15 år")]
+		Fifteen = 1 << 3
+	}
 	
 	public class Media
 	{
