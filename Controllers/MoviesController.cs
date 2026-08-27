@@ -16,12 +16,38 @@ public class MoviesController : Controller
 	}
 
 	// GET: MOVIES
-	public async Task<IActionResult> Index()
+	public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString)
 	{
+		ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "TitleDesc" : "";
+		ViewData["DateSortParm"] = sortOrder == "Year" ? "YearDesc" : "Year";
+		ViewData["CurrentFilter"] = searchString;
+		var movies = from movie in _context.Movie select movie;
+		if (!String.IsNullOrEmpty(searchString))
+		{
+			searchString.ToUpper();
+			movies = movies.Where(show => show.Title.ToUpper().Contains(searchString));
+		}
+
+		switch (sortOrder)
+		{
+			case "TitleDesc":
+				movies = movies.OrderByDescending(show => show.Title);
+				break;
+			case "Year":
+				movies = movies.OrderBy(show => show.Year);
+				break;
+			case "YearDesc":
+				movies = movies.OrderByDescending(show => show.Year);
+				break;
+			default:
+				movies = movies.OrderBy(show => show.Title);
+				break;
+		}
+
 		if (_context == null)
 			return NotFound();
-
-		return View(await _context.Movie.ToListAsync());
+		
+		return View(await movies.AsNoTracking().ToListAsync());
 	}
 /*
 	[HttpGet("{id}")]
@@ -88,6 +114,8 @@ public class MoviesController : Controller
 		if (movie == null)
 			return NotFound();
 
+		string Escape(string s) => s.Contains(", ") ? $"{s}" : s;
+
 		return View(movie);
 	}
 
@@ -106,6 +134,11 @@ public class MoviesController : Controller
 		{
 			try
 			{
+				if (movie.Actors.Length < 1)
+					movie.Actors = null;
+				if (movie.Reviews.Length < 1)
+					movie.Reviews = null;
+
 				_context.Update(movie);
 				await _context.SaveChangesAsync();
 			}

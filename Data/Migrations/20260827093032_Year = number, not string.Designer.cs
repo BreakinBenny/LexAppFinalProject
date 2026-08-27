@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistaProjektSeptember2026.Data;
 
@@ -11,9 +12,11 @@ using SistaProjektSeptember2026.Data;
 namespace SistaProjektSeptember2026.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260827093032_Year = number, not string")]
+    partial class Yearnumbernotstring
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,7 +259,7 @@ namespace SistaProjektSeptember2026.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movie", (string)null);
+                    b.ToTable("Movie");
                 });
 
             modelBuilder.Entity("SistaProjektSeptember2026.Models.TVShow", b =>
@@ -294,7 +297,7 @@ namespace SistaProjektSeptember2026.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TVShow", (string)null);
+                    b.ToTable("TVShow");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

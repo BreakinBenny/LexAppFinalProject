@@ -30,3 +30,10 @@
 * 
 * 
 
+==2026-08-27==
+* Search and filter implementations not working as intended (because I called on _context instead of the object representing the items' collection.
+* Reviews and actors return System.String[] when going to the Edit view
+* 
+* 
+
+

@@ -16,23 +16,35 @@
 	</p>
 }
 
+<form method="get">
+	<div class="form-actions no-color">
+		<p>
+			<input type="text" placeholder="Sök på namn..." name="SearchString" value="@ViewData["CurrentFilter"]" />
+			<input type="submit" value="Sök" class="btn btn-default" /> |
+			<a>Rensa sökfilter</a>
+		</p>
+	</div>
+</form>
+
 @if (adminUI)
 {
 	<table class="table">
 		<thead>
 			<tr>
 				<th>
-					@Html.DisplayNameFor(model => model.Title)
+					@* <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.LastName)</a> *@
+					<a asp-route-sortOrder="@ViewData["NameSortParm"]" @*asp-route-currentfilter="@ViewData["currentFilter"]"*@ >@Html.DisplayNameFor(model => model.Title)</a>
 				</th>
 				<th>
 					@Html.DisplayNameFor(model => model.Seasons) & 
 					@Html.DisplayNameFor(model => model.EpisodesPerSeason)
 				</th>
 				<th>
-					@Html.DisplayNameFor(model => model.Year)
+					@Html.DisplayNameFor(model => model.Genres)
 				</th>
 				<th>
-					@Html.DisplayNameFor(model => model.Genres)
+					@* <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.EnrollmentDate)</a> *@
+					<a asp-route-sortOrder="@ViewData["DateSortParm"]" @*asp-route-currentfilter="@ViewData["currentFilter"]"*@ >@Html.DisplayNameFor(model => model.Year)</a>
 				</th>
 				<th>
 					@Html.DisplayNameFor(model => model.Actors)
@@ -43,7 +55,6 @@
 				<th>
 					@Html.DisplayNameFor(model => model.Reviews)
 				</th>
-				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -58,25 +69,35 @@
 						@Html.DisplayFor(model => item.EpisodesPerSeason)
 					</td>
 					<td>
-						@Html.DisplayFor(model => item.Year)
-					</td>
-					<td>
 					@if (item.Genres > 0)
 						@Html.DisplayFor(model => item.Genres)
 					</td>
 					<td>
-						@Html.DisplayFor(model => item.Actors)
+						@Html.DisplayFor(model => item.Year)
+					</td>
+					<td>
+					@if (item.Actors.Length < 2)
+						@Html.DisplayFor(model => item.Actors[0].ToString())
+					else {
+						// Add comma separator for reviews and actors
+					}
 					</td>
 					<td>
 						@Html.DisplayFor(model => item.AgeGroup)
 					</td>
 					<td>
-						@Html.DisplayFor(model => item.Reviews)
+					@if (item.Reviews.Length < 2) {
+						if (!String.IsNullOrWhiteSpace(item.Reviews[0]))
+							@Html.DisplayFor(model => item.Reviews);
+					}
+					else {
+						// See Actors above
+					}
 					</td>
 					<td>
 					@if (User.Identity.IsAuthenticated)
 					{
-						<p style="align-center;">
+						<p>
 							<a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
 							<a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
 						</p>

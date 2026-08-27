@@ -1,6 +1,7 @@
 //using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SistaProjektSeptember2026.Data;
 using SistaProjektSeptember2026.Models;
 
@@ -16,12 +17,38 @@ public class TVShowsController : Controller
 	}
 
 	// GET: TVSHOWS
-	public async Task<IActionResult> Index()
+	public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString)
 	{
+		ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "TitleDesc" : "";
+		ViewData["DateSortParm"] = sortOrder == "Year" ? "YearDesc" : "Year";
+		ViewData["CurrentFilter"] = searchString;
+		var tvshows = from show in _context.TVShow select show;
+		if (!String.IsNullOrEmpty(searchString))
+		{
+			searchString.ToUpper();
+			tvshows = tvshows.Where(show => show.Title.ToUpper().Contains(searchString));
+		}
+
+		switch (sortOrder)
+		{
+			case "TitleDesc":
+				tvshows = tvshows.OrderByDescending(show => show.Title);
+				break;
+			case "Year":
+				tvshows = tvshows.OrderBy(show => show.Year);
+				break;
+			case "YearDesc":
+				tvshows = tvshows.OrderByDescending(show => show.Year);
+				break;
+			default:
+				tvshows = tvshows.OrderBy(show => show.Title);
+				break;
+		}
+
 		if (_context == null)
 			return NotFound();
 
-		return View(await _context.TVShow.ToListAsync());
+		return View(await tvshows.AsNoTracking().ToListAsync());
 	}
 /*
 	[HttpGet("{id}")]
@@ -106,6 +133,11 @@ public class TVShowsController : Controller
 		{
 			try
 			{
+				if (tvshow.Actors.Length < 1)
+					tvshow.Actors = null;
+				if (tvshow.Reviews.Length < 1)
+					tvshow.Reviews = null;
+
 				_context.Update(tvshow);
 				await _context.SaveChangesAsync();
 			}

@@ -41,7 +41,7 @@ namespace SistaProjektSeptember2026.Models
 		[Display(Name = "Titel")]
 		public string Title { get; set; }
 		[Display(Name = "Lanseringsår")]
-		public string? Year { get; set; }
+		public ushort Year { get; set; }
 		[Display(Name = "Genre(r)")]
 		public Genre Genres { get; set; } = Genre.NoGenre;
 		[Display(Name = "Medverkande")]
