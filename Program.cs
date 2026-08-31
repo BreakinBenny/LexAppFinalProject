@@ -14,15 +14,16 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 	.AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+//builder.Services.AddHttpClient();
 //builder.Services.AddControllers();
-//builder.Services.AddOpenApi();
+builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-	//app.MapOpenApi();
+	app.MapOpenApi();
 	//app.MapScalarApiReference();
 
 	app.UseMigrationsEndPoint();
@@ -49,5 +50,5 @@ app.MapControllerRoute(
 app.MapRazorPages()
    .WithStaticAssets();
 
-//app.MapControllers();
+app.MapControllers();
 app.Run();
