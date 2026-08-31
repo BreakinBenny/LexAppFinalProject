@@ -1,7 +1,6 @@
 //using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using SistaProjektSeptember2026.Data;
 using SistaProjektSeptember2026.Models;
 
@@ -75,7 +74,13 @@ public class TVShowsController : Controller
 			.FirstOrDefaultAsync(m => m.Id == id);
 		if (tvshow == null)
 			return NotFound();
-
+		/*
+		if (tvshow.Reviews != null) { 
+			string ReviewsString = null;
+			foreach (var Review in tvshow.Reviews)
+				ReviewsString += string.Join(", ", Review);
+		}
+		*/
 		return View(tvshow);
 	}
 
@@ -92,7 +97,7 @@ public class TVShowsController : Controller
 	[HttpPost]
 	[ValidateAntiForgeryToken]
 	//[Authorize(Roles = "Administrator")]
-	public async Task<IActionResult> Create([Bind("Seasons,EpisodesPerSeason,Id,Title,Year,Genres,Actors,AgeGroup,Reviews")] TVShow tvshow)
+	public async Task<IActionResult> Create([Bind("Seasons,EpisodesPerSeason,Id,Title,Year,Genres,Actors,AgeGroup,Reviews,Director")] TVShow tvshow)
 	{
 		if (ModelState.IsValid)
 		{
@@ -124,7 +129,7 @@ public class TVShowsController : Controller
 	[HttpPost]
 	[ValidateAntiForgeryToken]
 	//[Authorize(Roles = "Administrator")]
-	public async Task<IActionResult> Edit(int? id, [Bind("Seasons,EpisodesPerSeason,Id,Title,Year,Genres,Actors,AgeGroup,Reviews")] TVShow tvshow)
+	public async Task<IActionResult> Edit(int? id, [Bind("Seasons,EpisodesPerSeason,Id,Title,Year,Genres,Actors,AgeGroup,Reviews,Director")] TVShow tvshow)
 	{
 		if (id != tvshow.Id)
 			return NotFound();
@@ -133,11 +138,6 @@ public class TVShowsController : Controller
 		{
 			try
 			{
-				if (tvshow.Actors.Length < 1)
-					tvshow.Actors = null;
-				if (tvshow.Reviews.Length < 1)
-					tvshow.Reviews = null;
-
 				_context.Update(tvshow);
 				await _context.SaveChangesAsync();
 			}

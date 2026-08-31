@@ -27,6 +27,8 @@ public class MoviesController : Controller
 			searchString.ToUpper();
 			movies = movies.Where(show => show.Title.ToUpper().Contains(searchString));
 		}
+		
+		
 
 		switch (sortOrder)
 		{
@@ -74,7 +76,14 @@ public class MoviesController : Controller
 			.FirstOrDefaultAsync(m => m.Id == id);
 		if (movie == null)
 			return NotFound();
-
+		/*
+		string ReviewsString = null;
+		if (movie.Reviews != null)
+		{
+			foreach (var Review in movie.Reviews)
+				ReviewsString += string.Join(", ", movie.Reviews);
+		}
+		*/
 		return View(movie);
 	}
 
@@ -91,7 +100,7 @@ public class MoviesController : Controller
 	[HttpPost]
 	[ValidateAntiForgeryToken]
 	//[Authorize(Roles = "Administrator")]
-	public async Task<IActionResult> Create([Bind("Id,Title,Runtime,Year,Genres,Actors,AgeGroup,Reviews")] Movie movie)
+	public async Task<IActionResult> Create([Bind("Id,Title,Runtime,Year,Genres,Actors,AgeGroup,Reviews,Director")] Movie movie)
 	{
 		if (ModelState.IsValid)
 		{
@@ -113,7 +122,13 @@ public class MoviesController : Controller
 		var movie = await _context.Movie.FindAsync(id);
 		if (movie == null)
 			return NotFound();
-
+		/*
+		if (movie.Reviews != null) {
+			string ReviewsString = null;
+			foreach (var Review in movie.Reviews)
+				ReviewsString += string.Join("], ", Review);
+		}
+		*/
 		return View(movie);
 	}
 
@@ -123,7 +138,7 @@ public class MoviesController : Controller
 	[HttpPost]
 	[ValidateAntiForgeryToken]
 	//[Authorize(Roles = "Administrator")]
-	public async Task<IActionResult> Edit(int? id, [Bind("Runtime,Id,Title,Genres,Year,Actors,AgeGroup,Reviews")] Movie movie)
+	public async Task<IActionResult> Edit(int? id, [Bind("Runtime,Id,Title,Genres,Year,Actors,AgeGroup,Reviews,Director")] Movie movie)
 	{
 		if (id != movie.Id)
 			return NotFound();
@@ -132,11 +147,6 @@ public class MoviesController : Controller
 		{
 			try
 			{
-				if (movie.Actors.Length < 1)
-					movie.Actors = null;
-				if (movie.Reviews.Length < 1)
-					movie.Reviews = null;
-
 				_context.Update(movie);
 				await _context.SaveChangesAsync();
 			}

@@ -232,11 +232,11 @@ namespace SistaProjektSeptember2026.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.PrimitiveCollection<string>("Actors")
+                    b.Property<string>("Actors")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AgeGroup")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AgeGroup")
+                        .HasColumnType("int");
 
                     b.Property<int>("Genres")
                         .HasColumnType("int");
@@ -244,8 +244,8 @@ namespace SistaProjektSeptember2026.Data.Migrations
                     b.PrimitiveCollection<string>("Reviews")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<short?>("Runtime")
-                        .HasColumnType("smallint");
+                    b.Property<int?>("Runtime")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -256,7 +256,7 @@ namespace SistaProjektSeptember2026.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movie", (string)null);
+                    b.ToTable("Movie");
                 });
 
             modelBuilder.Entity("SistaProjektSeptember2026.Models.TVShow", b =>
@@ -267,11 +267,11 @@ namespace SistaProjektSeptember2026.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.PrimitiveCollection<string>("Actors")
+                    b.Property<string>("Actors")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AgeGroup")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AgeGroup")
+                        .HasColumnType("int");
 
                     b.Property<byte?>("EpisodesPerSeason")
                         .HasColumnType("tinyint");
@@ -294,7 +294,7 @@ namespace SistaProjektSeptember2026.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TVShow", (string)null);
+                    b.ToTable("TVShow");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

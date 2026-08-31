@@ -35,16 +35,18 @@ namespace SistaProjektSeptember2026.Models
 	}
 
 	[Flags]
-	public enum AgeRating : byte
+	public enum AgeRating : ushort
 	{
+		[Display(Name = "Åldersgräns otillgänglig")]
+		Unknown = 0,
 		[Display(Name = "Kan ses av alla åldrar")]
-		AllAges = 0,
+		AllAges = 1,
 		[Display(Name = "Från 7 år")]
-		Seven = 1 << 1,
+		Seven = 2,
 		[Display(Name = "Från 11 år")]
-		Eleven = 1 << 2,
+		Eleven = 4,
 		[Display(Name = "Från 15 år")]
-		Fifteen = 1 << 3
+		Fifteen = 8
 	}
 	
 	public class Media
@@ -53,21 +55,23 @@ namespace SistaProjektSeptember2026.Models
 		public int Id { get; set; }
 		[Display(Name = "Titel")]
 		public string Title { get; set; }
+		[Display(Name = "Regi")]
+		public string? Director { get; set; }
 		[Display(Name = "Lanseringsår")]
 		public ushort Year { get; set; }
 		[Display(Name = "Genre(r)")]
 		public Genre Genres { get; set; } = Genre.NoGenre;
 		[Display(Name = "Medverkande")]
-		public string[]? Actors { get; set; }
-		[Display(Name = "Åldersgrupp(er)")]
-		public string? AgeGroup { get; set; }
+		public string? Actors { get; set; }
+		[Display(Name = "Åldersgräns")]
+		public AgeRating AgeGroup { get; set; }
 		[Display(Name = "Recensioner")]
 		public string[]? Reviews { get; set; }
 	}
 	public class Movie : Media
 	{
 		[Display(Name = "Längd (i minuter)")]
-		public short? Runtime { get; set; }	// IN MINUTES!
+		public ushort? Runtime { get; set; }	// IN MINUTES!
 	}
 	public class TVShow : Media
 	{

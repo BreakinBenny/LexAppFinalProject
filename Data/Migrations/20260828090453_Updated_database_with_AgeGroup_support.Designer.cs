@@ -12,8 +12,8 @@ using SistaProjektSeptember2026.Data;
 namespace SistaProjektSeptember2026.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260821143457_Movies_and_TV_show_tables")]
-    partial class Movies_and_TV_show_tables
+    [Migration("20260828090453_Updated_database_with_AgeGroup_support")]
+    partial class Updated_database_with_AgeGroup_support
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,24 +235,27 @@ namespace SistaProjektSeptember2026.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.PrimitiveCollection<string>("Actors")
+                    b.Property<string>("Actors")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AgeGroup")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AgeGroup")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Date")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Genres")
+                        .HasColumnType("int");
 
                     b.PrimitiveCollection<string>("Reviews")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte?>("Runtime")
-                        .HasColumnType("tinyint");
+                    b.Property<int?>("Runtime")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -267,30 +270,30 @@ namespace SistaProjektSeptember2026.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.PrimitiveCollection<string>("Actors")
+                    b.Property<string>("Actors")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AgeGroup")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("ChristmasShow")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Date")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AgeGroup")
+                        .HasColumnType("int");
 
                     b.Property<byte?>("EpisodesPerSeason")
                         .HasColumnType("tinyint");
 
+                    b.Property<int>("Genres")
+                        .HasColumnType("int");
+
                     b.PrimitiveCollection<string>("Reviews")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte?>("Seasons")
+                    b.Property<byte>("Seasons")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
