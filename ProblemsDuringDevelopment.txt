@@ -36,4 +36,17 @@
 * 
 * 
 
+==2026-08-28==
+* Age group choosing requires being set up with a radio input
+* 
+* 
+* 
 
+==2026-08-31==
+* API fetching from OMDb not functioning due to JavaScript not properly running. (Otherwise, using the website works.)
+*
+*
+
+==2026-09-01==
+* 
+* 

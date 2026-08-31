@@ -14,7 +14,12 @@
 		<dd class = "col-sm-10">
 			@Html.DisplayFor(model => model.Runtime)
 		</dd>
-
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Director)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Director)
+		</dd>
 
 		<dt class = "col-sm-2">
 			@Html.DisplayNameFor(model => model.Genres)
@@ -48,7 +53,10 @@
 			@Html.DisplayNameFor(model => model.Reviews)
 		</dt>
 		<dd class = "col-sm-10">
-			@Html.DisplayFor(model => model.Reviews)
+@*			@if (Model.Reviews.Length > 1)
+				@Html.DisplayFor(model => model.Reviews)
+			else
+*@				@Html.DisplayFor(model => model.Reviews[0])
 		</dd>
 	</dl>
 </div>

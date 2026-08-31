@@ -21,7 +21,7 @@
 		<p>
 			<input type="text" placeholder="Sök på namn..." name="SearchString" value="@ViewData["CurrentFilter"]" />
 			<input type="submit" value="Sök" class="btn btn-default" /> |
-			<a>Rensa sökfilter</a>
+			<a asp-action="Index">Rensa sökfilter</a>
 		</p>
 	</div>
 </form>
@@ -58,49 +58,43 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var item in Model)
-			{
-				<tr>
-					<td>
-						@Html.DisplayFor(model => item.Title)
-					</td>
-					<td>
-						@Html.DisplayFor(model => item.Seasons), 
-						@Html.DisplayFor(model => item.EpisodesPerSeason)
-					</td>
-					<td>
-					@if (item.Genres > 0)
-						@Html.DisplayFor(model => item.Genres)
-					</td>
-					<td>
-						@Html.DisplayFor(model => item.Year)
-					</td>
-					<td>
-					@if (item.Actors.Length < 2)
-						@Html.DisplayFor(model => item.Actors[0])
-					else {
-						// Add comma separator for reviews and actors
-					}
-					</td>
-					<td>
-						@Html.DisplayFor(model => item.AgeGroup)
-					</td>
-					<td>
-					@if (item.Reviews != null)
-						@Html.DisplayFor(model => item.Reviews);
-					</td>
-					<td>
-					@if (User.Identity.IsAuthenticated)
-					{
-						<p>
-							<a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
-							<a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
-						</p>
-					}
-						<a asp-action="Details" asp-route-id="@item.Id">Läs mer</a>
-					</td>
-				</tr>
-			}
+		@foreach (var item in Model) {
+			<tr>
+				<td>
+					@Html.DisplayFor(model => item.Title)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.Seasons), 
+					@Html.DisplayFor(model => item.EpisodesPerSeason)
+				</td>
+				<td>
+				@if (item.Genres > 0)
+					@Html.DisplayFor(model => item.Genres)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.Year)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.Actors)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.AgeGroup)
+				</td>
+				<td>
+					@Html.DisplayFor(model => item.Reviews)
+				</td>
+				<td>
+				@if (User.Identity.IsAuthenticated)
+				{
+					<p>
+						<a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
+						<a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
+					</p>
+				}
+					<a asp-action="Details" asp-route-id="@item.Id">Läs mer</a>
+				</td>
+			</tr>
+		}
 		</tbody>
 	</table>
 }
