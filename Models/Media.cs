@@ -3,41 +3,41 @@
 namespace SistaProjektSeptember2026.Models
 {
 	[Flags]
-	public enum Genre : ushort
+	public enum Genre
 	{
 		NoGenre = 0,
-		Action = 1,	// 1 << 0
+		Action = 1 << 0,
 		[Display(Name = "Äventyr")]
-		Adventure = 2,	// 1 << 1
+		Adventure = 1 << 1,
 		[Display(Name = "Animerad")]
-		Animated = 4,	// 1 << 2
-		Anime = 8,	// 1 << 3
+		Animated = 1 << 2,
+		Anime = 1 << 3,
 		[Display(Name = "Julprogram")]
-		Christmas = 16,	// 1 << 4
+		Christmas = 1 << 4,
 		[Display(Name = "Komedi")]
-		Comedy = 32,	// 1 << 5
+		Comedy = 1 << 5,
 		[Display(Name = "Kriminal")]
-		Criminal = 64,	// 1 << 6
-		Drama = 128,	// 1 << 7
+		Criminal = 1 << 6,
+		Drama = 1 << 7,
 		[Display(Name = "Familj")]
-		Family = 256,	// 1 << 8
+		Family = 1 << 8,
 		[Display(Name = "Historia")]
-		History = 512,	// 1 << 9
+		History = 1 << 9,
 		[Display(Name = "Skräck")]
-		Horror = 1024,	// 1 << 10
+		Horror = 1 << 10,
 		[Display(Name = "Mysterium")]
-		Mystery = 2048,	// 1 << 11
+		Mystery = 1 << 11,
 		[Display(Name = "Romantik")]
-		Romance = 4096,	// 1 << 12
+		Romance = 1 << 12,
 		[Display(Name = "Sci-Fi")]
-		SciFi = 8192,	// 1 << 13
-		Thriller = 16384 // 1 << 14
+		SciFi = 1 << 13,
+		Thriller = 1 << 14
 	}
 
 	[Flags]
-	public enum AgeRating : ushort
+	public enum AgeRating
 	{
-		[Display(Name = "Åldersgräns otillgänglig")]
+		[Display(Name = "Ingen åldersgräns tillgänglig")]
 		Unknown = 0,
 		[Display(Name = "Kan ses av alla åldrar")]
 		AllAges = 1,
@@ -58,7 +58,7 @@ namespace SistaProjektSeptember2026.Models
 		[Display(Name = "Regi")]
 		public string? Director { get; set; }
 		[Display(Name = "Lanseringsår")]
-		public ushort Year { get; set; }
+		public int Year { get; set; }
 		[Display(Name = "Genre(r)")]
 		public Genre Genres { get; set; } = Genre.NoGenre;
 		[Display(Name = "Medverkande")]
@@ -71,13 +71,40 @@ namespace SistaProjektSeptember2026.Models
 	public class Movie : Media
 	{
 		[Display(Name = "Längd (i minuter)")]
-		public ushort? Runtime { get; set; }	// IN MINUTES!
+		public int Runtime { get; set; }	// IN MINUTES!
 	}
+
 	public class TVShow : Media
 	{
 		[Display(Name = "Säsonger")]
-		public byte Seasons { get; set; } = 1;
+		public int Seasons { get; set; } = 1;
 		[Display(Name = "Avsnitt per säsong")]
-		public byte? EpisodesPerSeason { get; set; }
+		public int EpisodesPerSeason { get; set; }
+	}
+
+	public class OMDbResponse {
+		public string Title { get; set; }
+		public string Year { get; set; }
+		public string Genre { get; set; }
+		public string Actors { get; set; }
+		public string Director { get; set; }
+		public string Rated { get; set; }
+		public string Response { get; set; }    // "True" eller "False"
+		public string Error { get; set; }   // ifall Response == "False"
+	}
+	public class OMDbResponseTVShow : OMDbResponse {
+		public int totalSeasons { get; set; }
+	}
+	public class OMDbResponseMovie : OMDbResponse {
+		public string Runtime { get; set; }
+	}
+
+	public enum AgeGroup { 
+		Unknown, Everyone, ParentalGuidance,
+		Age10Plus = 10,
+		Age13Plus = 13,
+		Age15Plus = 15, Age16Plus = 16,
+		Age18Plus = 18,
+		Unrated = 99
 	}
 }

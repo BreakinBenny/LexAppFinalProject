@@ -48,5 +48,12 @@
 *
 
 ==2026-09-01==
+* Copilot were asked on how to make the API work, and I finally got it working with HttpClient and a GET request. Now I can fetch movies and TV shows from OMDb, but it did not succeed at converting genre nor age rating data at first.
+* 
+
+
+==2026-09-02==
 * 
 * 
+* 
+

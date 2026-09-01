@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistaProjektSeptember2026.Data;
 
 #nullable disable
 
-namespace SistaProjektSeptember2026.Data.Migrations
+namespace SistaProjektSeptember2026.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260828090453_Updated_database_with_AgeGroup_support")]
-    partial class Updated_database_with_AgeGroup_support
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,13 +238,16 @@ namespace SistaProjektSeptember2026.Data.Migrations
                     b.Property<int>("AgeGroup")
                         .HasColumnType("int");
 
+                    b.Property<string>("Director")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Genres")
                         .HasColumnType("int");
 
                     b.PrimitiveCollection<string>("Reviews")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Runtime")
+                    b.Property<int>("Runtime")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -276,8 +276,11 @@ namespace SistaProjektSeptember2026.Data.Migrations
                     b.Property<int>("AgeGroup")
                         .HasColumnType("int");
 
-                    b.Property<byte?>("EpisodesPerSeason")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("Director")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EpisodesPerSeason")
+                        .HasColumnType("int");
 
                     b.Property<int>("Genres")
                         .HasColumnType("int");
@@ -285,8 +288,8 @@ namespace SistaProjektSeptember2026.Data.Migrations
                     b.PrimitiveCollection<string>("Reviews")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("Seasons")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("Seasons")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
