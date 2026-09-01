@@ -91,7 +91,8 @@
 <script>
 async function apiSearch() {
 	let apiKey = prompt("Vänligen skriv in en giltig API-nyckel för att hämta via OMDb (Open Movie Database).").trim();
-	const url = "https://omdbapi.com/?" + apiKey;
+	let title = prompt("Vänligen skriv in en filmtitel att söka efter.").trim();
+	var url = `https://omdbapi.com/?apikey=${apiKey}&t=${title}`;
 
 	try {
 		const response = await fetch(url);

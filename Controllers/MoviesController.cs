@@ -79,7 +79,6 @@ public class MoviesController : Controller
 	[HttpGet("omdb")]
 	public async Task<ActionResult<Movie>> GetMovieFromOMDb([FromQuery] string apikey, [FromQuery] string title, [FromQuery] bool save = false)
 	{
-		//ApiKey = "238306e2";
 		if (string.IsNullOrWhiteSpace(apikey) || string.IsNullOrWhiteSpace(title))
 			return BadRequest("API-nyckel eller filmtitel saknas!");
 
