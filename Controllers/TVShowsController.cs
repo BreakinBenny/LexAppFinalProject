@@ -1,18 +1,21 @@
 //using Microsoft.AspNetCore.Authorization;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistaProjektSeptember2026.Data;
 using SistaProjektSeptember2026.Models;
 
-//[Route("/[controller]")]
-//[ApiController]
+[Route("/[controller]")]
+[ApiController]
 public class TVShowsController : Controller
 {
 	private readonly ApplicationDbContext _context;
+	private readonly IHttpClientFactory _httpClientFactory;
 
-	public TVShowsController(ApplicationDbContext context)
+	public TVShowsController(ApplicationDbContext context, IHttpClientFactory httpClientFactory)
 	{
 		_context = context;
+		_httpClientFactory = httpClientFactory;
 	}
 
 	// GET: TVSHOWS
@@ -49,20 +52,131 @@ public class TVShowsController : Controller
 
 		return View(await tvshows.AsNoTracking().ToListAsync());
 	}
-/*
-	[HttpGet("{id}")]
-	public async Task<ActionResult<TVShow>> GetTVShow(int id)
+	/*
+		[HttpGet("{id}")]
+		public async Task<ActionResult<TVShow>> GetTVShow(int id)
+		{
+			if (_context == null)
+				return NotFound();
+
+			var tvshow = await _context.TVShow.FindAsync(id);
+			if (tvshow == null)
+				return BadRequest("TV Show not found!");
+
+			return Ok(tvshow);
+		}
+	*/
+
+	// GET: TVSHOWS/OMDb?apikey=YOUR_API_KEY&t=TITLE
+	[HttpGet("omdb")]
+	public async Task<ActionResult<TVShow>> GetTVShowFromOMDb([FromQuery] string apikey, [FromQuery] string title, [FromQuery] bool save = false)
 	{
-		if (_context == null)
-			return NotFound();
+		if (string.IsNullOrWhiteSpace(apikey) || string.IsNullOrWhiteSpace(title))
+			return BadRequest("API-nyckel eller TV-seriens titel saknas!");
 
-		var tvshow = await _context.TVShow.FindAsync(id);
-		if (tvshow == null)
-			return BadRequest("TV Show not found!");
+		var client = _httpClientFactory.CreateClient();
+		var url = $"http://www.omdbapi.com/?apikey={Uri.EscapeDataString(apikey)}&t={Uri.EscapeDataString(title)}";
+		using var resp = await client.GetAsync(url);
+		if (!resp.IsSuccessStatusCode)
+			return StatusCode((int)resp.StatusCode, "Felmeddelande från OMDb.");
 
-		return Ok(tvshow);
+		var json = await resp.Content.ReadAsStringAsync();
+		var omdb = JsonSerializer.Deserialize<OMDbResponseTVShow>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+		if (omdb == null || string.Equals(omdb.Response, "False", StringComparison.OrdinalIgnoreCase))
+			return BadRequest(omdb?.Error ?? "Ingen data från OMDb.");
+		if (omdb.Type != "series")
+			return BadRequest($"{omdb.Title} är inte en TV-serie!");
+
+		var OMDbTVShow = new TVShow
+		{
+			Title = omdb.Title,
+			AgeGroup = AgeGroupParse(omdb.Rated),
+			Genres = GenreParse(omdb.Genre),
+			Director = omdb.Director,
+			Actors = omdb.Actors,
+			Year = TryParseYear(omdb.Year),
+			Seasons = int.Parse(omdb.totalSeasons)
+		};
+		Console.WriteLine($"\nKLART!\nHär har du din TV-serie med ID {omdb.imdbID}! :-)");
+
+		if (save) { _context.TVShow.Add(OMDbTVShow); await _context.SaveChangesAsync(); }
+
+		return Ok(OMDbTVShow);
 	}
-*/
+
+	private static AgeRating AgeGroupParse(string rated)
+	{
+		if (string.IsNullOrWhiteSpace(rated))
+			return AgeRating.Unknown;
+
+		rated = rated.Trim().ToUpperInvariant();
+
+		return rated switch
+		{
+			"N/A" => AgeRating.Unknown,
+			"G" => AgeRating.AllAges,
+			"PG" => AgeRating.Seven,
+			"TV-Y" => AgeRating.Seven,
+			"PG-13" => AgeRating.Eleven,
+			"R" => AgeRating.Fifteen
+
+		};
+	}
+	private static readonly Dictionary<string, Genre> _genreMap = new(StringComparer.OrdinalIgnoreCase)
+	{
+		{ "Action", Genre.Action },
+		{ "Adventure", Genre.Adventure },
+		{ "Animated", Genre.Animated },
+		{ "Anime", Genre.Anime },
+		{ "Christmas", Genre.Christmas },
+		{ "Comedy", Genre.Comedy },
+		{ "Criminal", Genre.Criminal },
+		{ "Drama", Genre.Drama },
+		{ "Family", Genre.Family },
+		{ "History", Genre.History },
+		{ "Horror", Genre.Horror },
+		{ "Mystery", Genre.Mystery },
+		{ "Romance", Genre.Romance },
+		{ "SciFi", Genre.SciFi },
+		{ "Thriller", Genre.Thriller }
+	};
+	private static Genre GenreParse(string omdbGenreCsv)
+	{
+		if (string.IsNullOrWhiteSpace(omdbGenreCsv))
+			return Genre.NoGenre;
+
+		Genre result = Genre.NoGenre;
+		var genreParts = omdbGenreCsv.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+		foreach (var part in genreParts)
+		{
+			if (_genreMap.TryGetValue(part, out var g))
+			{
+				result |= g;
+				continue;
+			}
+
+			// Fallback, försöka normalisera och prova direkt parsing av enum (Finns mellanslag och bindestreck här? Nej tack!)
+			var normalized = part.Replace("-", " ").Replace(" ", "");
+			if (Enum.TryParse<Genre>(normalized, ignoreCase: true, out var parsed))
+			{
+				result |= parsed;
+				continue;
+			}
+			// Okända genres ignorerar vi...
+		}
+
+		return result;
+	}
+
+	private static int TryParseYear(string year)
+	{
+		if (string.IsNullOrWhiteSpace(year)) return 0;  // Inget år funnet, returnera 0 som standardvärde!
+		var parts = year.Split('–', '—'); // The year of release or premiere is relevant
+
+		return int.TryParse(parts[0], out var y) ? y : 0;
+	}
+
 	// GET: TVSHOWS/Details/5
 	[HttpGet]
 	public async Task<IActionResult> Details(int? id)

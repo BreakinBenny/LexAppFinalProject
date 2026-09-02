@@ -1,3 +1,4 @@
+@inject IHttpClientFactory HttpClientFactory
 @model SistaProjektSeptember2026.Models.Movie
 
 @{ ViewData["Title"] = "Create"; }
@@ -5,6 +6,19 @@
 <h2>Lägg till film</h2>
 
 <hr />
+<form method="get">
+	<div class="form-actions no-color">
+		<p>
+			<label for="apiKey">API-nyckel:</label>
+			<input type="text" placeholder="API-nyckel..." name="apiKey" />
+			<label>
+				<input type="text" placeholder="Sök filmtitel..." name="search" />"
+			</label>
+			<input type="submit" value="Sök" class="btn btn-default" />
+		</p>
+	</div>
+</form>
+
 <div class="row">
 	<div class="col-md-4">
 		<form asp-action="Create">
@@ -112,10 +126,11 @@
 				<label asp-for="AgeGroup" class="control-label"></label>
 				<input asp-for="AgeGroup" id="AgeGroup" value="0" type="hidden" />
 
-				@Html.RadioButtonFor(m => m.AgeGroup, 0) Kan ses av alla åldrar
-				@Html.RadioButtonFor(m => m.AgeGroup, 1) Från 7 år
-				@Html.RadioButtonFor(m => m.AgeGroup, 2) Från 11 år
-				@Html.RadioButtonFor(m => m.AgeGroup, 3) Från 15 år
+				@Html.RadioButtonFor(m => m.AgeGroup, 0) Okänd åldersgräns
+				@Html.RadioButtonFor(m => m.AgeGroup, 1) Kan ses av alla åldrar
+				@Html.RadioButtonFor(m => m.AgeGroup, 2) Från 7 år
+				@Html.RadioButtonFor(m => m.AgeGroup, 3) Från 11 år
+				@Html.RadioButtonFor(m => m.AgeGroup, 4) Från 15 år
 
 				<span asp-validation-for="AgeGroup" class="text-danger"></span>
 			</div>

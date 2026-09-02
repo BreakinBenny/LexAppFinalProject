@@ -2,7 +2,7 @@
 
 @{ ViewData["Title"] = "Index"; }
 
-<h1>Index    /    <button class="favorite styled" id="API-OMDb" type="button" onclick=apiSearch()>SÖK MED API</button></h1>
+<h1>Index    /    <a asp-action="APICreate">Sök film med API</a></h1>
 @if (User.Identity.IsAuthenticated)
 {
 	<p>
@@ -87,7 +87,7 @@
 	</tbody>
 </table>
 
-@section Scripts {
+@section Scripts { @*
 <script>
 async function apiSearch() {
 	let apiKey = prompt("Vänligen skriv in en giltig API-nyckel för att hämta via OMDb (Open Movie Database).").trim();
@@ -107,4 +107,4 @@ async function apiSearch() {
 	}
 }
 </script>
-}
+*@ }

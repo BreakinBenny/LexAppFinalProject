@@ -31,22 +31,23 @@ namespace SistaProjektSeptember2026.Models
 		Romance = 1 << 12,
 		[Display(Name = "Sci-Fi")]
 		SciFi = 1 << 13,
-		Thriller = 1 << 14
+		Thriller = 1 << 14,
+		Fantasy = 1 << 15
 	}
 
 	[Flags]
 	public enum AgeRating
 	{
-		[Display(Name = "Ingen åldersgräns tillgänglig")]
+		[Display(Name = "Åldersgräns saknas")]
 		Unknown = 0,
 		[Display(Name = "Kan ses av alla åldrar")]
-		AllAges = 1,
+		AllAges = 1 << 0,
 		[Display(Name = "Från 7 år")]
-		Seven = 2,
+		Seven = 1 << 1,
 		[Display(Name = "Från 11 år")]
-		Eleven = 4,
+		Eleven = 1 << 2,
 		[Display(Name = "Från 15 år")]
-		Fifteen = 8
+		Fifteen = 1 << 3
 	}
 	
 	public class Media
@@ -83,28 +84,23 @@ namespace SistaProjektSeptember2026.Models
 	}
 
 	public class OMDbResponse {
-		public string Title { get; set; }
-		public string Year { get; set; }
-		public string Genre { get; set; }
-		public string Actors { get; set; }
-		public string Director { get; set; }
-		public string Rated { get; set; }
-		public string Response { get; set; }    // "True" eller "False"
-		public string Error { get; set; }   // ifall Response == "False"
+		public string? imdbID { get; set; }
+		public string? Title { get; set; }
+		public string? Year { get; set; }
+		public string? Genre { get; set; }
+		public string? Actors { get; set; }
+		public string? Poster { get; set; }
+		public string? Plot { get; set; }
+		public string? Director { get; set; }
+		public string? Type { get; set; }   // "movie" eller "series", för att avvisa i händelse av att fel typ av media returneras
+		public string? Rated { get; set; }
+		public string? Response { get; set; }    // "True" eller "False"
+		public string? Error { get; set; }   // ifall Response == "False"
 	}
 	public class OMDbResponseTVShow : OMDbResponse {
-		public int totalSeasons { get; set; }
+		public string totalSeasons { get; set; } = "1";
 	}
 	public class OMDbResponseMovie : OMDbResponse {
-		public string Runtime { get; set; }
-	}
-
-	public enum AgeGroup { 
-		Unknown, Everyone, ParentalGuidance,
-		Age10Plus = 10,
-		Age13Plus = 13,
-		Age15Plus = 15, Age16Plus = 16,
-		Age18Plus = 18,
-		Unrated = 99
+		public string? Runtime { get; set; }
 	}
 }

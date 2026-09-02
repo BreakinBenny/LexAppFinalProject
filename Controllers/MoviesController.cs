@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using SistaProjektSeptember2026.Data;
 using SistaProjektSeptember2026.Models;
 
-[Route("/[controller]")]
-[ApiController]
+//[Route("/[controller]")]
+//[ApiController]
 public class MoviesController : Controller
 {
 	private readonly ApplicationDbContext _context;
@@ -92,6 +92,8 @@ public class MoviesController : Controller
 		var omdb = JsonSerializer.Deserialize<OMDbResponseMovie>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 		if (omdb == null || string.Equals(omdb.Response, "False", StringComparison.OrdinalIgnoreCase))
 			return BadRequest(omdb?.Error ?? "Ingen data från OMDb.");
+		if (omdb.Type != "movie")
+			return BadRequest($"{omdb.Title} är inte en film!");
 
 		var OMDbMovie = new Movie {
 			Title = omdb.Title,
@@ -102,7 +104,7 @@ public class MoviesController : Controller
 			Year = TryParseYear(omdb.Year),
 			Runtime = TryParseRuntimeMinutes(omdb.Runtime)
 		};
-		Console.WriteLine("Här har du din film! :-)");
+		Console.WriteLine($"\nKLART!\nHär har du din film med ID {omdb.imdbID}! :-)");
 
 		if (save) { _context.Movie.Add(OMDbMovie); await _context.SaveChangesAsync(); }
 
@@ -142,7 +144,8 @@ public class MoviesController : Controller
 		{ "Mystery", Genre.Mystery },
 		{ "Romance", Genre.Romance },
 		{ "SciFi", Genre.SciFi },
-		{ "Thriller", Genre.Thriller }
+		{ "Thriller", Genre.Thriller },
+		{ "Fantasy", Genre.Fantasy }
 	};
 	private static Genre GenreParse(string omdbGenreCsv) {
 		if (string.IsNullOrWhiteSpace(omdbGenreCsv))
@@ -164,7 +167,7 @@ public class MoviesController : Controller
 				continue;
 			}
 			// Okända genres ignorerar vi...
-        }
+		}
 
 		return result;
 	}

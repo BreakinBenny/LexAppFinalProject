@@ -1,7 +1,7 @@
 using SistaProjektSeptember2026.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Scalar.AspNetCore;
+//using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +13,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 	.AddEntityFrameworkStores<ApplicationDbContext>();
-//builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -24,7 +24,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
 	app.MapOpenApi();
-	app.MapScalarApiReference();
+	//app.MapScalarApiReference();
 
 	app.UseMigrationsEndPoint();
 }
@@ -41,7 +41,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
-/*
+
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}")
@@ -49,6 +49,6 @@ app.MapControllerRoute(
 
 app.MapRazorPages()
    .WithStaticAssets();
-*/
-app.MapControllers();
+
+//app.MapControllers();
 app.Run();
