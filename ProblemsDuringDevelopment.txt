@@ -53,7 +53,7 @@
 
 
 ==2026-09-02==
-* 
+* API fetch implementation suggested by Copilot (GPT-5 mini) in Razor Page using JavaScript did not work, and was too messy for me to properly get working. Discarded, and will do as my advisor suggested with 
 * 
 * 
 

@@ -17,6 +17,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 //builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddTransient<SistaProjektSeptember2026.Models.OMDbResponseMovie>();
 
 var app = builder.Build();
 

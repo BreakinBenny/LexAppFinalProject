@@ -1,7 +1,12 @@
 @inject IHttpClientFactory HttpClientFactory
+@inject OMDbResponseMovie OMDbFetch
 @model SistaProjektSeptember2026.Models.Movie
 
-@{ ViewData["Title"] = "Create"; }
+@{
+	ViewData["Title"] = "Create";
+	var OMDbFetch = new OMDbResponseMovie();
+	
+}
 
 <h2>Lägg till film</h2>
 
@@ -10,14 +15,32 @@
 	<div class="form-actions no-color">
 		<p>
 			<label for="apiKey">API-nyckel:</label>
-			<input type="text" placeholder="API-nyckel..." name="apiKey" />
+				<input type="text" name="apikey" />
 			<label>
-				<input type="text" placeholder="Sök filmtitel..." name="search" />"
+				<input type="text" placeholder="Sök filmtitel..." name="t" />
 			</label>
-			<input type="submit" value="Sök" class="btn btn-default" />
+			<input type="submit" value="Sök (med API)" class="btn btn-primary" />
 		</p>
 	</div>
 </form>
+
+<div class="text-center" align="right">
+	@if (OMDbFetch != null && !string.IsNullOrEmpty(OMDbFetch.Poster))
+	{
+		<img src="@OMDbFetch.Poster" alt="Affisch för @OMDbFetch.Title" />
+	} else { <p>NO MOVIE POSTER (yet)!</p> }
+
+	@if (OMDbFetch != null && !string.IsNullOrEmpty(OMDbFetch.Plot))
+	{
+		<h2>Plot:</h2>
+		<p><i>@OMDbFetch.Plot</i></p>
+	}
+	else
+	{
+		<p><i>'Twas a dark and stormy night...</i></p>
+	}
+	
+</div>
 
 <div class="row">
 	<div class="col-md-4">
