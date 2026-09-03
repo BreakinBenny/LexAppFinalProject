@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using SistaProjektSeptember2026.Data;
 using SistaProjektSeptember2026.Models;
 
-[Route("/[controller]")]
-[ApiController]
+//[Route("/[controller]")]
+//[ApiController]
 public class TVShowsController : Controller
 {
 	private readonly ApplicationDbContext _context;
