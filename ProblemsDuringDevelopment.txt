@@ -57,3 +57,17 @@
 * 
 * 
 
+==2026-09-03==
+* API fetch being set up in a Razor Page using HttpClient and a GET request, but I still have things to do.
+* ViewDataDictionary now expects a "CreateModel", rather than ".Models.Movie". 
+** I had managed to get the CreateModel Razor Page, though it is merely HTML and immediately tries to fetch from OMDb when going to the page. Keeping MVC may be better.
+* Even now, I am still unable to have the Model-View-Controller function, and the ViewModel resulted in an AmbiguousMatchException.
+* 
+
+
+==2026-09-04==
+* 
+* 
+* 
+* 
+
