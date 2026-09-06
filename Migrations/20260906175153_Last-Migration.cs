@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SistaProjektSeptember2026.Migrations
 {
     /// <inheritdoc />
-    public partial class Too_early_for_ushort : Migration
+    public partial class LastMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

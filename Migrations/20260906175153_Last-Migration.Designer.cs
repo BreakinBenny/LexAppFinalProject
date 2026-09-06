@@ -12,8 +12,8 @@ using SistaProjektSeptember2026.Data;
 namespace SistaProjektSeptember2026.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260901094932_Too_early_for_ushort")]
-    partial class Too_early_for_ushort
+    [Migration("20260906175153_Last-Migration")]
+    partial class LastMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
