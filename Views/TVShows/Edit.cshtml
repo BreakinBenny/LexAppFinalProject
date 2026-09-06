@@ -116,10 +116,11 @@
 				<label asp-for="AgeGroup" class="control-label"></label>
 				<input asp-for="AgeGroup" id="AgeGroup" type="hidden" />
 
-				@Html.RadioButtonFor(m => m.AgeGroup, 0) Kan ses av alla åldrar
-				@Html.RadioButtonFor(m => m.AgeGroup, 1) Från 7 år
-				@Html.RadioButtonFor(m => m.AgeGroup, 2) Från 11 år
-				@Html.RadioButtonFor(m => m.AgeGroup, 4) Från 15 år
+                @Html.RadioButtonFor(m => m.AgeGroup, 0) Åldersgräns okänd
+				@Html.RadioButtonFor(m => m.AgeGroup, 1) Kan ses av alla åldrar
+				@Html.RadioButtonFor(m => m.AgeGroup, 2) Från 7 år
+				@Html.RadioButtonFor(m => m.AgeGroup, 4) Från 11 år
+				@Html.RadioButtonFor(m => m.AgeGroup, 8) Från 15 år
 
 				<span asp-validation-for="AgeGroup" class="text-danger"></span>
 			</div>
@@ -131,7 +132,7 @@
 			</div>
 
 			<div class="form-group">
-				<input type="submit" value="Save" class="btn btn-primary" />
+				<input type="submit" value="Spara ändringar" class="btn btn-primary" />
 			</div>
 		</form>
 	</div>

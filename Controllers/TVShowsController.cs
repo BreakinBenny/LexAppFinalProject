@@ -67,43 +67,6 @@ public class TVShowsController : Controller
 		}
 	*/
 
-	// GET: TVSHOWS/OMDb?apikey=YOUR_API_KEY&t=TITLE
-	[HttpGet("omdb")]
-	public async Task<ActionResult<TVShow>> GetTVShowFromOMDb([FromQuery] string apikey, [FromQuery] string title, [FromQuery] bool save = false)
-	{
-		if (string.IsNullOrWhiteSpace(apikey) || string.IsNullOrWhiteSpace(title))
-			return BadRequest("API-nyckel eller TV-seriens titel saknas!");
-
-		var client = _httpClientFactory.CreateClient();
-		var url = $"http://www.omdbapi.com/?apikey={Uri.EscapeDataString(apikey)}&t={Uri.EscapeDataString(title)}";
-		using var resp = await client.GetAsync(url);
-		if (!resp.IsSuccessStatusCode)
-			return StatusCode((int)resp.StatusCode, "Felmeddelande från OMDb.");
-
-		var json = await resp.Content.ReadAsStringAsync();
-		var omdb = JsonSerializer.Deserialize<OMDbResponseTVShow>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-		if (omdb == null || string.Equals(omdb.Response, "False", StringComparison.OrdinalIgnoreCase))
-			return BadRequest(omdb?.Error ?? "Ingen data från OMDb.");
-		if (omdb.Type != "series")
-			return BadRequest($"{omdb.Title} är inte en TV-serie!");
-
-		var OMDbTVShow = new TVShow
-		{
-			Title = omdb.Title,
-			AgeGroup = AgeGroupParse(omdb.Rated),
-			Genres = GenreParse(omdb.Genre),
-			Director = omdb.Director,
-			Actors = omdb.Actors,
-			Year = TryParseYear(omdb.Year),
-			Seasons = int.Parse(omdb.totalSeasons)
-		};
-		Console.WriteLine($"\nKLART!\nHär har du din TV-serie med ID {omdb.imdbID}! :-)");
-
-		if (save) { _context.TVShow.Add(OMDbTVShow); await _context.SaveChangesAsync(); }
-
-		return Ok(OMDbTVShow);
-	}
-
 	private static AgeRating AgeGroupParse(string rated)
 	{
 		if (string.IsNullOrWhiteSpace(rated))
@@ -200,9 +163,45 @@ public class TVShowsController : Controller
 
 	// GET: TVSHOWS/Create
 	//[Authorize(Roles = "Administrator")]
-	public IActionResult Create()
+	[HttpGet]
+	public async Task<IActionResult> Create([FromQuery] string apikey, [FromQuery] string t)
 	{
-		return View(new TVShow());
+		if (!string.IsNullOrWhiteSpace(apikey) && !string.IsNullOrWhiteSpace(t))
+		{
+			var client = _httpClientFactory.CreateClient();
+			var url = $"http://www.omdbapi.com/?apikey={apikey}&t={t}";
+
+			Console.WriteLine("API-nyckel och seriens titel angavs, söker efter serie...");
+			var OMDbTVShow = await client.GetFromJsonAsync<OMDbResponseTVShow>(url);
+			if (OMDbTVShow != null && OMDbTVShow.imdbID != null && bool.Parse(OMDbTVShow.Response))
+			{
+				Console.WriteLine($"Hittade {OMDbTVShow.Title} på IMDB! ({OMDbTVShow.imdbID})");
+				if (OMDbTVShow.Type != "series") Console.Write($" ...{OMDbTVShow.Title} är dock ingen serie, men låt gå.");
+			}
+			else
+			{
+				Console.WriteLine($"Hittade ingen serie som heter {OMDbTVShow.Title}! Stavade du fel, eller vill du skriva titeln på dess ursprungsspråk om det finns?");
+				return View();
+			}
+
+			var tvshow = new TVShow {
+				Title = OMDbTVShow.Title,
+				AgeGroup = AgeGroupParse(OMDbTVShow.Rated),
+				Genres = GenreParse(OMDbTVShow.Genre),
+				Director = OMDbTVShow.Director,
+				Actors = OMDbTVShow.Actors,
+				Year = TryParseYear(OMDbTVShow.Year),
+				Seasons = int.Parse(OMDbTVShow.totalSeasons)
+			};
+			if (ModelState.IsValid)
+			{
+				_context.Add(tvshow);
+				await _context.SaveChangesAsync();
+				return RedirectToAction(nameof(Index));
+			}
+		}
+		
+		return View();
 	}
 
 	// POST: TVSHOWS/Create

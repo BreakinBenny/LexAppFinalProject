@@ -1,28 +1,25 @@
-@model SistaProjektSeptember2026.Models.Movie
-
+@model CreateMovieModel
 @{
-	ViewData["Title"] = "Create";
-	var OMDbFetch = new OMDbResponseMovie();
-	
+	var OMDbFetch = new OMDbResponseMovie(); 
 }
 
 <h2>Lägg till film</h2>
 
 <hr />
-<form method="post">
+<form method="get">
 	<div class="form-actions no-color">
 		<p>
 			<label>API-nyckel: <input type="text" name="apikey" /></label>
 			<label>
-				<input type="text" placeholder="Sök filmtitel..." name="t" />
+				<input type="text" placeholder="Sök filmtitel... (ex. Grodan Boll, Jönssonligan...)" name="t" />
 			</label>
 			<input type="submit" value="Sök (med API)" class="btn btn-primary" />
 		</p>
 	</div>
 </form>
-
+@*
 <div class="text-center" align="right">
-	@if (OMDbFetch != null && !string.IsNullOrEmpty(OMDbFetch.Poster))
+	@if (!string.IsNullOrWhiteSpace(OMDbFetch.Poster))
 	{
 		<img src="@OMDbFetch.Poster" alt="Affisch för @OMDbFetch.Title" />
 	} else { <p>NO MOVIE POSTER (yet)!</p> }
@@ -38,38 +35,38 @@
 	}
 	
 </div>
-
+*@
 <div class="row">
 	<div class="col-md-4">
-		<form asp-action="Create">
+		<form method="post" asp-action="Create">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 			<div class="form-group">
-				<label asp-for="Runtime" class="control-label"></label>
-				<input asp-for="Runtime" class="form-control" />
-				<span asp-validation-for="Runtime" class="text-danger"></span>
+				<label asp-for="@Model.OMDbFetch.Runtime" class="control-label"></label>
+				<input asp-for="@Model.OMDbFetch.Runtime" class="form-control" />
+				<span asp-validation-for="@Model.OMDbFetch.Runtime" class="text-danger"></span>
 			</div>
 
 			<div class="form-group">
-				<label asp-for="Title" class="control-label"></label>
-				<input asp-for="Title" class="form-control" />
-				<span asp-validation-for="Title" class="text-danger"></span>
+				<label asp-for="@Model.OMDbFetch.Title" class="control-label"></label>
+				<input asp-for="@Model.OMDbFetch.Title" class="form-control" />
+				<span asp-validation-for="@Model.OMDbFetch.Title" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="Director" class="control-label"></label>
-				<input asp-for="Director" class="form-control" />
-				<span asp-validation-for="Director" class="text-danger"></span>
-			</div>
-
-			<div class="form-group">
-				<label asp-for="Year" class="control-label"></label>
-				<input asp-for="Year" class="form-control" />
-				<span asp-validation-for="Year" class="text-danger"></span>
+				<label asp-for="@Model.OMDbFetch.Director" class="control-label"></label>
+				<input asp-for="@Model.OMDbFetch.Director" class="form-control" />
+				<span asp-validation-for="@Model.OMDbFetch.Director" class="text-danger"></span>
 			</div>
 
 			<div class="form-group">
-				<label asp-for="Genres" class="control-label"></label>
-				<input asp-for="Genres" id="Genres" value="0" type="hidden" />
+				<label asp-for="@Model.OMDbFetch.Year" class="control-label"></label>
+				<input asp-for="@Model.OMDbFetch.Year" class="form-control" />
+				<span asp-validation-for="@Model.OMDbFetch.Year" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="@Model.OMDbFetch.Genre" class="control-label"></label>
+				<input asp-for="@Model.OMDbFetch.Genre" id="Genres" value="0" type="hidden" />
 
 				<div>
 					<label class="form-check-label">
@@ -133,36 +130,36 @@
 					</label>
 				</div>
 
-				<span asp-validation-for="Genres" class="text-danger"></span>
+				<span asp-validation-for="@Model.OMDbFetch.Genre" class="text-danger"></span>
 			</div>
 
 			<div class="form-group">
-				<label asp-for="Actors" class="control-label"></label>
-				<input asp-for="Actors" class="form-control" />
-				<span asp-validation-for="Actors" class="text-danger"></span>
+				<label asp-for="@Model.OMDbFetch.Actors" class="control-label"></label>
+				<input asp-for="@Model.OMDbFetch.Actors" class="form-control" />
+				<span asp-validation-for="@Model.OMDbFetch.Actors" class="text-danger"></span>
 			</div>
 
 			<div class="form-group">
-				<label asp-for="AgeGroup" class="control-label"></label>
-				<input asp-for="AgeGroup" id="AgeGroup" value="0" type="hidden" />
+				<label asp-for="@Model.OMDbFetch.Rated" class="control-label"></label>
+				<input asp-for="@Model.OMDbFetch.Rated" id="AgeGroup" value="0" type="hidden" />
 
-				@Html.RadioButtonFor(m => m.AgeGroup, 0) Okänd åldersgräns
-				@Html.RadioButtonFor(m => m.AgeGroup, 1) Kan ses av alla åldrar
-				@Html.RadioButtonFor(m => m.AgeGroup, 2) Från 7 år
-				@Html.RadioButtonFor(m => m.AgeGroup, 3) Från 11 år
-				@Html.RadioButtonFor(m => m.AgeGroup, 4) Från 15 år
+				@Html.RadioButtonFor(m => OMDbFetch.Rated, 0) Okänd åldersgräns
+				@Html.RadioButtonFor(m => OMDbFetch.Rated, 1) Kan ses av alla åldrar
+				@Html.RadioButtonFor(m => OMDbFetch.Rated, 2) Från 7 år
+				@Html.RadioButtonFor(m => OMDbFetch.Rated, 4) Från 11 år
+				@Html.RadioButtonFor(m => OMDbFetch.Rated, 8) Från 15 år
 
-				<span asp-validation-for="AgeGroup" class="text-danger"></span>
+				<span asp-validation-for="@Model.OMDbFetch.Rated" class="text-danger"></span>
 			</div>
-
+@*
 			<div class="form-group">
-				<label asp-for="Reviews" class="control-label"></label>
-				<input asp-for="Reviews" class="form-control" />
-				<span asp-validation-for="Reviews" class="text-danger"></span>
+				<label asp-for="@Model.OMDbFetch.Reviews" class="control-label"></label>
+				<input asp-for="@Model.OMDbFetch.Reviews" class="form-control" />
+				<span asp-validation-for="@Model.OMDbFetch.Reviews" class="text-danger"></span>
 			</div>
-
+*@
 			<div class="form-group">
-				<input type="submit" value="Create" class="btn btn-primary" />
+				<input type="submit" value="Lägg till" class="btn btn-primary" />
 			</div>
 		</form>
 	</div>

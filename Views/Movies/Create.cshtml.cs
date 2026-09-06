@@ -8,7 +8,7 @@ using SistaProjektSeptember2026.Models;
 
 namespace SistaProjektSeptember2026.Views.Movies
 {
-	public class CreateModel : PageModel
+	public class CreateMovieModel : PageModel
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly IHttpClientFactory _httpClientFactory;
@@ -16,6 +16,7 @@ namespace SistaProjektSeptember2026.Views.Movies
 		public OMDbResponseMovie? OMDbFetch { get; set; }
 		public async Task<IActionResult> OnGetAsync(string apikey, string t)
 		{
+			OMDbFetch = new OMDbResponseMovie();
 			if (!string.IsNullOrWhiteSpace(apikey) || !string.IsNullOrWhiteSpace(t))
 			{
 				var client = _httpClientFactory.CreateClient();
@@ -24,10 +25,13 @@ namespace SistaProjektSeptember2026.Views.Movies
 				OMDbFetch = await client.GetFromJsonAsync<OMDbResponseMovie>(url);
 				if (OMDbFetch.imdbID != null)
 					Console.WriteLine($"\nKLART!\nHär har du din film med ID {OMDbFetch.imdbID}! :-)");
+
+				return RedirectToPage("./Index");
 			}
+			Console.WriteLine("Kör på CSHTML.CS");
 			return Page();
 		}
-
+/*
 		public async Task<ActionResult<Movie>> GetMovieFromOMDb([FromQuery] string apikey, [FromQuery] string title, [FromQuery] bool save = false)
 		{
 			if (string.IsNullOrWhiteSpace(apikey) || string.IsNullOrWhiteSpace(title))
@@ -137,6 +141,6 @@ namespace SistaProjektSeptember2026.Views.Movies
 			if (string.IsNullOrWhiteSpace(runtime)) return 0;
 			var minutes = Regex.Match(runtime, @"(\d+)");
 			return minutes.Success && int.TryParse(minutes.Groups[1].Value, out var mins) ? mins : 0; // Return 0 if parsing fails
-		}
+		}*/
 	}
 }

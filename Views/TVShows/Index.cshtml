@@ -65,7 +65,8 @@
 				</td>
 				<td>
 					@Html.DisplayFor(model => item.Seasons), 
-					@Html.DisplayFor(model => item.EpisodesPerSeason)
+				@if (item.EpisodesPerSeason > 0) @Html.DisplayFor(model => item.EpisodesPerSeason)
+				else { <p>Antal avsnitt okänt</p> }
 				</td>
 				<td>
 				@if (item.Genres > 0)
