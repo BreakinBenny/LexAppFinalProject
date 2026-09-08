@@ -89,12 +89,12 @@ public class MoviesController : Controller
 			var OMDbMovie = await client.GetFromJsonAsync<OMDbResponseMovie>(url);
 			if (OMDbMovie != null && OMDbMovie.imdbID != null && bool.Parse(OMDbMovie.Response))
 			{
-				Console.WriteLine($"Hittade {OMDbMovie.Title} på IMDB! ({OMDbMovie.imdbID})");
+				Console.WriteLine($"Hittade {OMDbMovie.Title} på IMDB! ({OMDbMovie.imdbID})\n");
 				if (OMDbMovie.Type != "movie") Console.Write($" ...{OMDbMovie.Title} är dock ingen film, men låt gå.");
 			}
 			else
 			{
-				Console.WriteLine($"Hittade ingen film som heter {OMDbMovie.Title}! Stavade du fel, eller vill du skriva titeln på dess ursprungsspråk om det finns?");
+				Console.WriteLine($"Hittade inget med sökning på '{t}'! Stavade du fel, eller vill du skriva titeln på dess ursprungsspråk om den har ett?");
 				return View();
 			}
 

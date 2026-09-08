@@ -10,9 +10,8 @@
 	<div class="form-actions no-color">
 		<p>
 			<label>API-nyckel: <input type="text" name="apikey" /></label>
-			<label>
-				<input type="text" placeholder="Sök TV-serietitel... (ex. Everwood, Alfons Åberg...)" name="t" />
-			</label>
+			<label>Söktitel: <input type="text" placeholder="(ex. Everwood, Alfons Åberg...)" name="t" /></label>
+
 			<input type="submit" value="Sök (med API)" class="btn btn-primary" />
 		</p>
 	</div>
@@ -131,7 +130,7 @@
 				<label asp-for="@Model.OMDbFetch.Rated" class="control-label"></label>
 				<input asp-for="@Model.OMDbFetch.Rated" id="AgeGroup" value="0" type="hidden" />
 
-                @Html.RadioButtonFor(m => OMDbFetch.Rated, 0) Åkdersgräns saknas
+				@Html.RadioButtonFor(m => OMDbFetch.Rated, 0) Åkdersgräns saknas
 				@Html.RadioButtonFor(m => OMDbFetch.Rated, 1) Kan ses av alla åldrar
 				@Html.RadioButtonFor(m => OMDbFetch.Rated, 2) Från 7 år
 				@Html.RadioButtonFor(m => OMDbFetch.Rated, 4) Från 11 år

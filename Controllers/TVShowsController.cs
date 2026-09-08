@@ -1,9 +1,9 @@
 //using Microsoft.AspNetCore.Authorization;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistaProjektSeptember2026.Data;
 using SistaProjektSeptember2026.Models;
+
 
 //[Route("/[controller]")]
 //[ApiController]
@@ -69,7 +69,7 @@ public class TVShowsController : Controller
 
 	private static AgeRating AgeGroupParse(string rated)
 	{
-		if (string.IsNullOrWhiteSpace(rated))
+		if (string.IsNullOrWhiteSpace(rated) || rated == "Not Rated" || rated == "N/A")
 			return AgeRating.Unknown;
 
 		rated = rated.Trim().ToUpperInvariant();
@@ -175,13 +175,13 @@ public class TVShowsController : Controller
 			var OMDbTVShow = await client.GetFromJsonAsync<OMDbResponseTVShow>(url);
 			if (OMDbTVShow != null && OMDbTVShow.imdbID != null && bool.Parse(OMDbTVShow.Response))
 			{
-				Console.WriteLine($"Hittade {OMDbTVShow.Title} på IMDB! ({OMDbTVShow.imdbID})");
+				Console.WriteLine($"Hittade {OMDbTVShow.Title} på IMDB! ({OMDbTVShow.imdbID})\n");
 				if (OMDbTVShow.Type != "series") Console.Write($" ...{OMDbTVShow.Title} är dock ingen serie, men låt gå.");
 			}
 			else
 			{
-				Console.WriteLine($"Hittade ingen serie som heter {OMDbTVShow.Title}! Stavade du fel, eller vill du skriva titeln på dess ursprungsspråk om det finns?");
-				return View();
+                Console.WriteLine($"Hittade inget med sökning på '{t}'! Stavade du fel, eller vill du skriva titeln på dess ursprungsspråk om den har ett?");
+                return View();
 			}
 
 			var tvshow = new TVShow {
@@ -191,7 +191,7 @@ public class TVShowsController : Controller
 				Director = OMDbTVShow.Director,
 				Actors = OMDbTVShow.Actors,
 				Year = TryParseYear(OMDbTVShow.Year),
-				Seasons = int.Parse(OMDbTVShow.totalSeasons)
+				Seasons = int.TryParse(OMDbTVShow.totalSeasons, out var seasons) ? seasons : 1
 			};
 			if (ModelState.IsValid)
 			{
