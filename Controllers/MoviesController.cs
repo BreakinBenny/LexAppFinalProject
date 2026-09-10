@@ -107,7 +107,9 @@ public class MoviesController : Controller
 				Year = TryParseYear(OMDbMovie.Year),
 				Runtime = TryParseRuntimeMinutes(OMDbMovie.Runtime)
 			};
-			if(ModelState.IsValid)
+			if (OMDbMovie.Plot != null && OMDbMovie.Plot != "N/A" && (OMDbMovie.Plot.Contains("Christmas") || OMDbMovie.Title.Contains("Christmas")))
+				movie.Genres |= Genre.Christmas; Console.Write("Och det är en julfilm/har jultema!");
+			if (ModelState.IsValid)
 			{
 				_context.Add(movie);
 				await _context.SaveChangesAsync();

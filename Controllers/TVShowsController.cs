@@ -180,8 +180,8 @@ public class TVShowsController : Controller
 			}
 			else
 			{
-                Console.WriteLine($"Hittade inget med sökning på '{t}'! Stavade du fel, eller vill du skriva titeln på dess ursprungsspråk om den har ett?");
-                return View();
+				Console.WriteLine($"Hittade inget med sökning på '{t}'! Stavade du fel, eller vill du skriva titeln på dess ursprungsspråk om den har ett?");
+				return View();
 			}
 
 			var tvshow = new TVShow {
@@ -193,6 +193,8 @@ public class TVShowsController : Controller
 				Year = TryParseYear(OMDbTVShow.Year),
 				Seasons = int.TryParse(OMDbTVShow.totalSeasons, out var seasons) ? seasons : 1
 			};
+			if (OMDbTVShow.Plot != null && OMDbTVShow.Plot != "N/A" && (OMDbTVShow.Plot.Contains("Christmas") || OMDbTVShow.Title.Contains("Christmas")))
+				tvshow.Genres |= Genre.Christmas; Console.Write("Och det är en julkalender/har jultema!");
 			if (ModelState.IsValid)
 			{
 				_context.Add(tvshow);
