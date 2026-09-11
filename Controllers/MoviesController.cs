@@ -22,28 +22,42 @@ public class MoviesController : Controller
 	public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString)
 	{
 		ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "TitleDesc" : "";
+		ViewData["RuntimeSortParm"] = sortOrder == "Runtime" ? "RuntimeDesc" : "Runtime";
 		ViewData["DateSortParm"] = sortOrder == "Year" ? "YearDesc" : "Year";
+		ViewData["AgeSortParm"] = sortOrder == "AgeGroup" ? "AgeGroupDesc" : "AgeGroup";
 		ViewData["CurrentFilter"] = searchString;
 		var movies = from movie in _context.Movie select movie;
 		if (!String.IsNullOrEmpty(searchString))
 		{
 			searchString.ToUpper();
-			movies = movies.Where(show => show.Title.ToUpper().Contains(searchString));
+			movies = movies.Where(movie => movie.Title.ToUpper().Contains(searchString));
 		}
 
 		switch (sortOrder)
 		{
 			case "TitleDesc":
-				movies = movies.OrderByDescending(show => show.Title);
+				movies = movies.OrderByDescending(movie => movie.Title);
+				break;
+			case "Runtime":
+				movies = movies.OrderBy(movie => movie.Runtime);
+				break;
+			case "RuntimeDesc":
+				movies = movies.OrderByDescending(movie => movie.Runtime);
 				break;
 			case "Year":
-				movies = movies.OrderBy(show => show.Year);
+				movies = movies.OrderBy(movie => movie.Year);
 				break;
 			case "YearDesc":
-				movies = movies.OrderByDescending(show => show.Year);
+				movies = movies.OrderByDescending(movie => movie.Year);
+				break;
+			case "AgeGroup":
+				movies = movies.OrderBy(movie => movie.AgeGroup);
+				break;
+			case "AgeGroupDesc":
+				movies = movies.OrderByDescending(movie => movie.AgeGroup);
 				break;
 			default:
-				movies = movies.OrderBy(show => show.Title);
+				movies = movies.OrderBy(movie => movie.Title);
 				break;
 		}
 
@@ -105,10 +119,14 @@ public class MoviesController : Controller
 				Director = OMDbMovie.Director,
 				Actors = OMDbMovie.Actors,
 				Year = TryParseYear(OMDbMovie.Year),
+				//Reviews = WIP,
 				Runtime = TryParseRuntimeMinutes(OMDbMovie.Runtime)
 			};
 			if (OMDbMovie.Plot != null && OMDbMovie.Plot != "N/A" && (OMDbMovie.Plot.Contains("Christmas") || OMDbMovie.Title.Contains("Christmas")))
-				movie.Genres |= Genre.Christmas; Console.Write("Och det är en julfilm/har jultema!");
+			{
+				movie.Genres |= Genre.Christmas;
+				Console.Write("Och det är en julfilm/har jultema!");
+			}
 			if (ModelState.IsValid)
 			{
 				_context.Add(movie);
@@ -231,12 +249,14 @@ public class MoviesController : Controller
 
 		return rated switch
 		{
+			"N/A" => AgeRating.Unknown,
 			"G" => AgeRating.AllAges,
 			"PG" => AgeRating.Seven,
 			"TV-Y" => AgeRating.Seven,
 			"PG-13" => AgeRating.Eleven,
-			"R" => AgeRating.Fifteen
-
+			"R" => AgeRating.Fifteen,
+			"TV-MA" => AgeRating.Eighteen,
+			"NC-17" => AgeRating.Eighteen
 		};
 	}
 	private static readonly Dictionary<string, Genre> _genreMap = new(StringComparer.OrdinalIgnoreCase) {

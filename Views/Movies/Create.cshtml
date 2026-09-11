@@ -9,7 +9,7 @@
 <form method="get">
 	<div class="form-actions no-color">
 		<p>
-			<label>API-nyckel: <input type="text" name="apikey" /></label>
+			<label>API-nyckel: <input type="password" name="apikey" /></label>
 			<label>Sökning: <input type="text" placeholder="(ex. Grodan Boll, Jönssonligan...)" name="t" /></label>
 
 			<input type="submit" value="Sök (med API)" class="btn btn-primary" />
@@ -34,7 +34,7 @@
 	}
 	
 </div>
-*@
+*@@*
 <div class="row">
 	<div class="col-md-4">
 		<form method="post" asp-action="Create">
@@ -150,20 +150,20 @@
 
 				<span asp-validation-for="@Model.OMDbFetch.Rated" class="text-danger"></span>
 			</div>
-@*
+*@@*
 			<div class="form-group">
 				<label asp-for="@Model.OMDbFetch.Reviews" class="control-label"></label>
 				<input asp-for="@Model.OMDbFetch.Reviews" class="form-control" />
 				<span asp-validation-for="@Model.OMDbFetch.Reviews" class="text-danger"></span>
 			</div>
 *@
-			<div class="form-group">
+@*			<div class="form-group">
 				<input type="submit" value="Lägg till" class="btn btn-primary" />
 			</div>
 		</form>
 	</div>
 </div>
-
+*@
 <div>
 	<a asp-action="Index">Tillbaka till listan</a>
 </div>

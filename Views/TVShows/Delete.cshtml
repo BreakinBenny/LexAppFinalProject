@@ -21,7 +21,9 @@
 			@Html.DisplayNameFor(model => model.EpisodesPerSeason)
 		</dt>
 		<dd class = "col-sm-10">
-			@Html.DisplayFor(model => model.EpisodesPerSeason)
+			@if (Model.EpisodesPerSeason > 0)
+				@Html.DisplayFor(model => model.EpisodesPerSeason)
+			else { <p>Okänt</p> }
 		</dd>
 	</dl>
 
@@ -66,7 +68,9 @@
 			@Html.DisplayNameFor(model => model.Reviews)
 		</dt>
 		<dd class = "col-sm-10">
-			@Html.DisplayFor(model => model.Reviews)
+			@if ( Model.Reviews != null)
+				@Html.DisplayFor(model => model.Reviews)
+			else { <p>Inga recensioner funna</p> }
 		</dd>
 	</dl>
 

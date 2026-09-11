@@ -10,11 +10,10 @@ namespace SistaProjektSeptember2026.Views.TVShows
 {
 	public class CreateTVShowModel : PageModel
 	{
-		private readonly ApplicationDbContext _context;
 		private readonly IHttpClientFactory _httpClientFactory;
 
 		public OMDbResponseTVShow? OMDbFetch { get; set; }
-		public async Task<IActionResult> OnGetAsync(string apikey, string t)
+		public async Task<IActionResult> OnGet(string apikey, string t)
 		{
 			OMDbFetch = new OMDbResponseTVShow();
 			if (!string.IsNullOrWhiteSpace(apikey) || !string.IsNullOrWhiteSpace(t))

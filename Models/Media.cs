@@ -47,7 +47,9 @@ namespace SistaProjektSeptember2026.Models
 		[Display(Name = "Från 11 år")]
 		Eleven = 1 << 2,
 		[Display(Name = "Från 15 år")]
-		Fifteen = 1 << 3
+		Fifteen = 1 << 3,
+		[Display(Name = "Från 18 år")]
+		Eighteen = 1 << 4
 	}
 	
 	public class Media
@@ -66,7 +68,7 @@ namespace SistaProjektSeptember2026.Models
 		public string? Actors { get; set; }
 		[Display(Name = "Åldersgräns")]
 		public AgeRating AgeGroup { get; set; }
-		[Display(Name = "Recensioner")]
+		[Display(Name = "Recensioner / betyg")]
 		public string[]? Reviews { get; set; }
 	}
 	public class Movie : Media
@@ -80,7 +82,7 @@ namespace SistaProjektSeptember2026.Models
 		[Display(Name = "Säsonger")]
 		public int Seasons { get; set; } = 1;
 		[Display(Name = "Avsnitt per säsong")]
-		public int EpisodesPerSeason { get; set; }
+		public int EpisodesPerSeason { get; set; } = 0;
 	}
 
 	public class OMDbResponse {
@@ -92,7 +94,8 @@ namespace SistaProjektSeptember2026.Models
 		public string? Poster { get; set; }
 		public string? Plot { get; set; }
 		public string? Director { get; set; }
-		public string? Type { get; set; }   // "movie" eller "series", för att avvisa i händelse av att fel typ av media returneras
+		//public string[]? Ratings { get; set; }
+		public string? Type { get; set; }   // "movie" eller "series", kan användas för att avvisa i händelse av att fel typ av media returneras
 		public string? Rated { get; set; }
 		public string? Response { get; set; }    // "True" eller "False"
 		public string? Error { get; set; }   // ifall Response == "False"

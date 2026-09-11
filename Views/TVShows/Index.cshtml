@@ -1,18 +1,12 @@
 @model IEnumerable<SistaProjektSeptember2026.Models.TVShow>
 
-@{
-	ViewData["Title"] = "Index";
-	bool adminUI = User.Identity.IsAuthenticated;
-}
+@{ ViewData["Title"] = "Index"; }
 
 <h1>Index</h1>
 @if (User.Identity.IsAuthenticated)
 {
 	<p>
-		<a asp-action="Create">Lägg till TV-serie</a> |
-
-		<input type="checkbox" id="admin" name="admin" value="adminUI" @* onclick="location.reload()" *@ />
-		<label for="admin">Växla Admin-gränssnitt</label>
+		<a asp-action="Create">Lägg till TV-serie</a>
 	</p>
 }
 
@@ -26,141 +20,75 @@
 	</div>
 </form>
 
-@if (adminUI)
-{
-	<table class="table">
-		<thead>
-			<tr>
-				<th>
-					@* <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.LastName)</a> *@
-					<a asp-route-sortOrder="@ViewData["NameSortParm"]" @*asp-route-currentfilter="@ViewData["currentFilter"]"*@ >@Html.DisplayNameFor(model => model.Title)</a>
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Seasons) & 
-					@Html.DisplayNameFor(model => model.EpisodesPerSeason)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Genres)
-				</th>
-				<th>
-					@* <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.EnrollmentDate)</a> *@
-					<a asp-route-sortOrder="@ViewData["DateSortParm"]" @*asp-route-currentfilter="@ViewData["currentFilter"]"*@ >@Html.DisplayNameFor(model => model.Year)</a>
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Actors)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.AgeGroup)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Reviews)
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-		@foreach (var item in Model) {
-			<tr>
-				<td>
-					@Html.DisplayFor(model => item.Title)
-				</td>
-				<td>
-					@Html.DisplayFor(model => item.Seasons), 
-				@if (item.EpisodesPerSeason > 0) { @Html.DisplayFor(model => item.EpisodesPerSeason) }
-				else { <p>Antal avsnitt okänt</p> }
-				</td>
-				<td>
-				@if (item.Genres > 0)
-					@Html.DisplayFor(model => item.Genres)
-				</td>
-				<td>
-					@Html.DisplayFor(model => item.Year)
-				</td>
-				<td>
-					@Html.DisplayFor(model => item.Actors)
-				</td>
-				<td>
-					@Html.DisplayFor(model => item.AgeGroup)
-				</td>
-				<td>
-					@Html.DisplayFor(model => item.Reviews)
-				</td>
-				<td>
-				@if (User.Identity.IsAuthenticated)
-				{
-					<p>
-						<a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
-						<a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
-					</p>
-				}
-					<a asp-action="Details" asp-route-id="@item.Id">Läs mer</a>
-				</td>
-			</tr>
-		}
-		</tbody>
-	</table>
-}
-else
-{
-	// Visitors' interface, with the fancy bits
-	<table class="table">
-		<thead>
-			<tr>
-				<th>
-					@Html.DisplayNameFor(model => model.Title)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Seasons) & 
-					@Html.DisplayNameFor(model => model.EpisodesPerSeason)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Genres)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Year)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Actors)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.AgeGroup)
-				</th>
-				<th>
-					@Html.DisplayNameFor(model => model.Reviews)
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var item in Model)
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@* <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.LastName)</a> *@
+				<a asp-route-sortOrder="@ViewData["NameSortParm"]" @*asp-route-currentfilter="@ViewData["currentFilter"]"*@ >@Html.DisplayNameFor(model => model.Title)</a>
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Seasons) & 
+				@Html.DisplayNameFor(model => model.EpisodesPerSeason)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Genres)
+			</th>
+			<th>
+				@* <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.EnrollmentDate)</a> *@
+				<a asp-route-sortOrder="@ViewData["DateSortParm"]" @*asp-route-currentfilter="@ViewData["currentFilter"]"*@ >@Html.DisplayNameFor(model => model.Year)</a>
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Actors)
+			</th>
+			<th>
+				<a asp-route-sortOrder="@ViewData["AgeSortParm"]">
+				@Html.DisplayNameFor(model => model.AgeGroup)</a>
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Reviews)
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	@foreach (var item in Model) {
+		<tr>
+			<td>
+				@Html.DisplayFor(model => item.Title)
+			</td>
+			<td>
+				@Html.DisplayFor(model => item.Seasons), 
+				@if (item.EpisodesPerSeason > 0)
+					@Html.DisplayFor(model => item.EpisodesPerSeason)
+				else { <p>Okänt</p> }
+			</td>
+			<td>
+			@if (item.Genres > 0)
+				@Html.DisplayFor(model => item.Genres)
+			</td>
+			<td>
+				@Html.DisplayFor(model => item.Year)
+			</td>
+			<td>
+				@Html.DisplayFor(model => item.Actors)
+			</td>
+			<td>
+				@Html.DisplayFor(model => item.AgeGroup)
+			</td>
+			<td>
+				@Html.DisplayFor(model => item.Reviews)
+			</td>
+			<td>
+			@if (User.Identity.IsAuthenticated)
 			{
-				<tr>
-					<td>
-						@Html.DisplayFor(model => item.Title)
-					</td>
-					<td>
-						@Html.DisplayFor(model => item.Seasons), 
-						@Html.DisplayFor(model => item.EpisodesPerSeason)
-					</td>
-					<td>
-					@if (item.Genres > 0)
-						@Html.DisplayFor(model => item.Genres)
-					</td>
-					<td>
-						@Html.DisplayFor(model => item.Year)
-					</td>
-					<td>
-						@Html.DisplayFor(model => item.Actors)
-					</td>
-					<td>
-						@Html.DisplayFor(model => item.AgeGroup)
-					</td>
-					<td>
-						@Html.DisplayFor(model => item.Reviews)
-					</td>
-					<td>
-						<a asp-action="Details" asp-route-id="@item.Id">Läs mer</a>
-					</td>
-				</tr>
+				<p>
+					<a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
+					<a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
+				</p>
 			}
-		</tbody>
-	</table>
-}
+				<a asp-action="Details" asp-route-id="@item.Id">Läs mer</a>
+			</td>
+		</tr>
+	}
+	</tbody>
+</table>

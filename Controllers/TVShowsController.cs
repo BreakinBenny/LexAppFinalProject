@@ -23,6 +23,7 @@ public class TVShowsController : Controller
 	{
 		ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "TitleDesc" : "";
 		ViewData["DateSortParm"] = sortOrder == "Year" ? "YearDesc" : "Year";
+		ViewData["AgeSortParm"] = sortOrder == "AgeGroup" ? "AgeGroupDesc" : "AgeGroup";
 		ViewData["CurrentFilter"] = searchString;
 		var tvshows = from show in _context.TVShow select show;
 		if (!String.IsNullOrEmpty(searchString))
@@ -41,6 +42,12 @@ public class TVShowsController : Controller
 				break;
 			case "YearDesc":
 				tvshows = tvshows.OrderByDescending(show => show.Year);
+				break;
+			case "AgeGroup":
+				tvshows = tvshows.OrderBy(show => show.AgeGroup);
+				break;
+			case "AgeGroupDesc":
+				tvshows = tvshows.OrderByDescending(show => show.AgeGroup);
 				break;
 			default:
 				tvshows = tvshows.OrderBy(show => show.Title);
@@ -81,8 +88,9 @@ public class TVShowsController : Controller
 			"PG" => AgeRating.Seven,
 			"TV-Y" => AgeRating.Seven,
 			"PG-13" => AgeRating.Eleven,
-			"R" => AgeRating.Fifteen
-
+			"R" => AgeRating.Fifteen,
+			"TV-MA" => AgeRating.Eighteen,
+			"NC-17" => AgeRating.Eighteen
 		};
 	}
 	private static readonly Dictionary<string, Genre> _genreMap = new(StringComparer.OrdinalIgnoreCase)
@@ -191,16 +199,21 @@ public class TVShowsController : Controller
 				Director = OMDbTVShow.Director,
 				Actors = OMDbTVShow.Actors,
 				Year = TryParseYear(OMDbTVShow.Year),
+				//Reviews = WIP,
 				Seasons = int.TryParse(OMDbTVShow.totalSeasons, out var seasons) ? seasons : 1
 			};
-			if (OMDbTVShow.Plot != null && OMDbTVShow.Plot != "N/A" && (OMDbTVShow.Plot.Contains("Christmas") || OMDbTVShow.Title.Contains("Christmas")))
-				tvshow.Genres |= Genre.Christmas; Console.Write("Och det är en julkalender/har jultema!");
+			if (OMDbTVShow.Plot != null && OMDbTVShow.Plot != "N/A" && (OMDbTVShow.Plot.Contains("Christmas") || OMDbTVShow.Title.Contains("Christmas"))) {
+				tvshow.Genres |= Genre.Christmas;
+				Console.Write("Och det är en julkalender/har jultema!\n\n");
+			}
+
 			if (ModelState.IsValid)
 			{
 				_context.Add(tvshow);
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
 			}
+			//else { ViewBag.error = "Kunde inte lägga till TV-serien som angavs."; }
 		}
 		
 		return View();

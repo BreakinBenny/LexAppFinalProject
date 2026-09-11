@@ -33,10 +33,7 @@
 							<a class="nav-link text-dark" asp-area="" asp-controller="TVShows" asp-action="Index">TV-serier</a>
 						</li>
 					</ul>
-					@if (User.Identity.IsAuthenticated)
-					{
-						<partial name="_LoginPartial" />
-					}
+					<partial name="_LoginPartial" />
 				</div>
 			</div>
 		</nav>

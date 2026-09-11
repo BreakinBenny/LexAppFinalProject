@@ -1,6 +1,7 @@
 @model CreateTVShowModel
 @{
 	var OMDbFetch = new OMDbResponseTVShow();
+	var error = "";
 }
 
 <h2>Lägg till TV-serie</h2>
@@ -9,14 +10,15 @@
 <form method="get">
 	<div class="form-actions no-color">
 		<p>
-			<label>API-nyckel: <input type="text" name="apikey" /></label>
+			<label>API-nyckel: <input type="password" name="apikey" /></label>
 			<label>Söktitel: <input type="text" placeholder="(ex. Everwood, Alfons Åberg...)" name="t" /></label>
 
 			<input type="submit" value="Sök (med API)" class="btn btn-primary" />
 		</p>
 	</div>
+	@if (!string.IsNullOrEmpty(error)) { <p>@error</p> }
 </form>
-
+@*
 <div class="row">
 	<div class="col-md-4">
 		<form method="post" asp-action="Create">
@@ -27,13 +29,13 @@
 				<input asp-for="@Model.OMDbFetch.totalSeasons" class="form-control" />
 				<span asp-validation-for="@Model.OMDbFetch.totalSeasons" class="text-danger"></span>
 			</div>
-@*
+*@@*
 			<div class="form-group">
 				<label asp-for="@Model.OMDbFetch.EpisodesPerSeason" class="control-label"></label>
 				<input asp-for="@Model.OMDbFetch.EpisodesPerSeason" class="form-control" />
 				<span asp-validation-for="@Model.OMDbFetch.EpisodesPerSeason" class="text-danger"></span>
 			</div>
-*@
+*@@*
 			<div class="form-group">
 				<label asp-for="@Model.OMDbFetch.Title" class="control-label"></label>
 				<input asp-for="@Model.OMDbFetch.Title" class="form-control" />
@@ -135,23 +137,24 @@
 				@Html.RadioButtonFor(m => OMDbFetch.Rated, 2) Från 7 år
 				@Html.RadioButtonFor(m => OMDbFetch.Rated, 4) Från 11 år
 				@Html.RadioButtonFor(m => OMDbFetch.Rated, 8) Från 15 år
+				@Html.RadioButtonFor(m => OMDbFetch.Rated, 16) Från 18 år
 
 				<span asp-validation-for="OMDbFetch.Rated" class="text-danger"></span>
 			</div>
-@*
+*@@*
 			<div class="form-group">
 				<label asp-for="@Model.OMDbFetch.Reviews" class="control-label"></label>
 				<input asp-for="@Model.OMDbFetch.Reviews" class="form-control" />
 				<span asp-validation-for="@Model.OMDbFetch.Reviews" class="text-danger"></span>
 			</div>
-*@
+*@@*
 			<div class="form-group">
 				<input type="submit" value="Lägg till" class="btn btn-primary" />
 			</div>
 		</form>
 	</div>
 </div>
-
+*@
 <div>
 	<a asp-action="Index">Tillbaka till listan</a>
 </div>
